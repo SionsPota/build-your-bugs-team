@@ -47,3 +47,5 @@ vendor/
 
 # 项目特定
 # 根据项目需要添加特定的忽略规则
+
+projects/demo/__pycache__/
