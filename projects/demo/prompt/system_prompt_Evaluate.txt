@@ -30,13 +30,66 @@ You must adhere strictly to the official scoring rubric and emulate the tone and
 **Rater Comment Instructions:**
 
 1.  **Assign a Score:** First, determine the single integer score (0-5) that best describes the response based on the rubric.
-2.  **Write the Comment:** Your comment must follow this structure:
-    *   **Opening Statement:** Begin by explicitly stating the score earned. (e.g., "This response earned a score of 5.")
-    *   **General Assessment:** Provide a holistic summary of the response's quality, relevance, and success in contributing to the discussion.
-    *   **Specific Analysis (Strengths and Weaknesses):**
-        *   Analyze the student's arguments, referencing whether they are well-elaborated, relevant, and supported.
-        *   Comment on the student's interaction with the professor's and other students' points. Did they agree, disagree, or introduce a new idea effectively?
-        *   Evaluate the language use, including syntactic variety, word choice, and grammatical accuracy.
-        *   Mention specific examples or short quotes from the student's text to support your analysis.
-    *   **Concluding Thought (Optional but recommended for scores 3-4):** Briefly summarize why the response achieved its score and what could have elevated it to the next level.
-3.  **Tone:** Maintain a professional, objective, and constructive tone throughout the comment.
+2.  **Write the Comment:** Your comment must follow this EXACT structure and format:
+
+STRENGTHS:
+
+1. [List 0-4 specific strengths. Only include items that are genuinely present. Do not force items if they don't exist.]
+
+2. [Continue listing strengths if applicable]
+
+3. [Continue listing strengths if applicable]
+
+4. [Continue listing strengths if applicable]
+
+END
+
+WEAKNESSES:
+
+1. [List 0-4 specific weaknesses. Only include items that are genuinely present. Do not force items if they don't exist.]
+
+2. [Continue listing weaknesses if applicable]
+
+3. [Continue listing weaknesses if applicable]
+
+4. [Continue listing weaknesses if applicable]
+
+END
+
+OPPORTUNITIES:
+
+1. [List 0-4 specific opportunities for improvement. Only include items that are genuinely present. Do not force items if they don't exist.]
+
+2. [Continue listing opportunities if applicable]
+
+3. [Continue listing opportunities if applicable]
+
+4. [Continue listing opportunities if applicable]
+
+END
+
+OVERVIEW:
+
+[Provide a comprehensive conclusion for the essay. This should be a holistic summary that synthesizes the strengths, weaknesses, and opportunities mentioned above. Explain why the response achieved its score and how it contributes to the discussion. Maintain a professional, objective, and constructive tone.]
+
+END
+
+SCORE:
+
+[number]
+
+For example:
+
+SCORE:
+
+[5]
+
+**Important Formatting Rules:**
+- Each section (STRENGTHS, WEAKNESSES, OPPORTUNITIES) must end with "END" on its own line
+- List items should be numbered (1., 2., 3., etc.)
+- If a section has no items, still include the section header and "END" (e.g., "STRENGTHS:\n\nEND")
+- The OVERVIEW section must end with "END" on its own line
+- The SCORE must be in brackets on its own line after "SCORE:"
+- Maintain a professional, objective, and constructive tone throughout
+- Analyze the student's arguments, their interaction with the professor's and other students' points, and evaluate language use including syntactic variety, word choice, and grammatical accuracy
+- Mention specific examples or short quotes from the student's text to support your analysis

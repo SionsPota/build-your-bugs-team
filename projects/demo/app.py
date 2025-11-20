@@ -5,7 +5,7 @@ from flask import Flask, request, jsonify, Response, stream_with_context, g, sen
 from flask_cors import CORS
 from dotenv import load_dotenv
 
-from model import Evaluator, Polisher
+from model import Evaluator, Polisher, CommentParser
 from telemetry import log_event, new_request_id, LOG_FILE
 
 load_dotenv()
@@ -13,6 +13,7 @@ load_dotenv()
 app = Flask(__name__)
 # 启用 CORS，允许前端跨域访问
 CORS(app)
+
 
 @app.before_request
 def _start_request():
@@ -24,6 +25,7 @@ def _start_request():
         route=request.path,
         method=request.method,
     )
+
 
 @app.after_request
 def _after_request(response):
@@ -46,6 +48,7 @@ def _after_request(response):
     )
     return response
 
+
 @app.errorhandler(Exception)
 def _handle_error(e):
     log_event(
@@ -62,6 +65,7 @@ def _handle_error(e):
 @app.route("/health", methods=["GET"])
 def health():
     return jsonify({"status": "ok"})
+
 
 @app.route("/logs/telemetry", methods=["GET"])
 def download_logs():
@@ -99,10 +103,20 @@ def grade_and_polish_sync():
         evaluator = Evaluator(question_file=question_file)
         comment = evaluator.generate_response(answer)
 
+        # 解析结构化评语
+        parser = CommentParser()
+        parsed_comment = parser.parse_complete(comment)
+
         polisher = Polisher(answer, comment)
         polished_answer = polisher.generate_response()
 
-        return jsonify({"comment": comment, "polished_answer": polished_answer})
+        return jsonify(
+            {
+                "comment": comment,
+                "parsed_comment": parsed_comment,
+                "polished_answer": polished_answer,
+            }
+        )
     except Exception as e:
         log_event(
             "grade_and_polish_sync.error",
@@ -143,8 +157,9 @@ def grade_and_polish():
             evaluator = Evaluator(question_file=question_file)
             comment_stream = evaluator.generate_response(answer, stream=True)
 
-            # 流式接收评估结果
+            # 流式接收评估结果并实时解析
             comment = ""
+            parser = CommentParser()
             yield f"data: {json.dumps({'type': 'status', 'stage': 'evaluating', 'message': '正在生成评语...'})}\n\n"
 
             for chunk in comment_stream:
@@ -155,10 +170,21 @@ def grade_and_polish():
                 ):
                     content = chunk.choices[0].delta.content
                     comment += content
+
+                    # 发送原始文本块
                     yield f"data: {json.dumps({'type': 'comment_chunk', 'content': content})}\n\n"
 
-            # 发送评估完成通知
-            yield f"data: {json.dumps({'type': 'comment_complete', 'comment': comment})}\n\n"
+                    # 尝试解析结构化数据
+                    parsed_update = parser.feed_chunk(content)
+                    if parsed_update:
+                        # 发送解析后的结构化数据更新
+                        yield f"data: {json.dumps({'type': 'comment_parsed', 'data': parsed_update})}\n\n"
+
+            # 最终解析（确保所有数据都被解析）
+            final_parsed = parser.parse_complete(comment)
+
+            # 发送评估完成通知（包含完整数据）
+            yield f"data: {json.dumps({'type': 'comment_complete', 'comment': comment, 'parsed_comment': final_parsed})}\n\n"
 
             # 发送开始润色通知
             yield f"data: {json.dumps({'type': 'status', 'stage': 'polishing', 'message': '开始润色作文...'})}\n\n"

@@ -14,11 +14,22 @@ export interface ApiError {
 	error: string;
 }
 
+// 结构化评语数据
+export interface ParsedComment {
+	strengths: string[];
+	weaknesses: string[];
+	opportunities: string[];
+	overview: string;
+	score: number | null;
+	raw_text: string;
+}
+
 // 流式事件类型
 export interface StreamEvent {
 	type:
 		| "status"
 		| "comment_chunk"
+		| "comment_parsed"
 		| "comment_complete"
 		| "polished_chunk"
 		| "polished_complete"
@@ -28,6 +39,8 @@ export interface StreamEvent {
 	message?: string;
 	content?: string;
 	comment?: string;
+	parsed_comment?: ParsedComment;
+	data?: Partial<ParsedComment>; // 用于 comment_parsed 事件的增量更新
 	polished_answer?: string;
 }
 
