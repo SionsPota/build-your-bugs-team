@@ -1,10 +1,12 @@
 import os
 import json
-from flask import Flask, request, jsonify, Response, stream_with_context
+import time
+from flask import Flask, request, jsonify, Response, stream_with_context, g, send_file
 from flask_cors import CORS
 from dotenv import load_dotenv
 
 from model import Evaluator, Polisher
+from telemetry import log_event, new_request_id, LOG_FILE
 
 load_dotenv()
 
@@ -12,10 +14,67 @@ app = Flask(__name__)
 # 启用 CORS，允许前端跨域访问
 CORS(app)
 
+@app.before_request
+def _start_request():
+    g.request_id = new_request_id()
+    g.start_time = time.perf_counter()
+    log_event(
+        "api.request.start",
+        request_id=g.request_id,
+        route=request.path,
+        method=request.method,
+    )
+
+@app.after_request
+def _after_request(response):
+    duration_ms = None
+    if hasattr(g, "start_time"):
+        duration_ms = int((time.perf_counter() - g.start_time) * 1000)
+    question_file = None
+    if request.is_json:
+        payload = request.get_json(silent=True)
+        if isinstance(payload, dict):
+            question_file = payload.get("question_file")
+    log_event(
+        "api.request.done",
+        request_id=getattr(g, "request_id", None),
+        route=request.path,
+        method=request.method,
+        status=response.status_code,
+        duration_ms=duration_ms,
+        question_file=question_file,
+    )
+    return response
+
+@app.errorhandler(Exception)
+def _handle_error(e):
+    log_event(
+        "api.request.error",
+        request_id=getattr(g, "request_id", None),
+        route=getattr(request, "path", None),
+        method=getattr(request, "method", None),
+        error_type=type(e).__name__,
+        error=str(e),
+    )
+    return jsonify({"error": "internal error"}), 500
+
 
 @app.route("/health", methods=["GET"])
 def health():
     return jsonify({"status": "ok"})
+
+@app.route("/logs/telemetry", methods=["GET"])
+def download_logs():
+    """下载遥测日志文件。"""
+    if not LOG_FILE.exists():
+        return jsonify({"error": "log file not found"}), 404
+    # 使用一次性读取避免代理端对流式响应解析错误
+    with open(LOG_FILE, "rb") as f:
+        data = f.read()
+    resp = Response(data, mimetype="text/plain")
+    resp.headers["Content-Disposition"] = "attachment; filename=telemetry.log"
+    resp.headers["Cache-Control"] = "no-store"
+    return resp
 
 
 # 保留旧的同步接口作为备用
@@ -45,6 +104,12 @@ def grade_and_polish_sync():
 
         return jsonify({"comment": comment, "polished_answer": polished_answer})
     except Exception as e:
+        log_event(
+            "grade_and_polish_sync.error",
+            request_id=getattr(g, "request_id", None),
+            error=str(e),
+            question_file=question_file,
+        )
         return jsonify({"error": str(e)}), 500
 
 
@@ -67,6 +132,11 @@ def grade_and_polish():
 
     def generate():
         try:
+            log_event(
+                "grade_and_polish.start",
+                request_id=getattr(g, "request_id", None),
+                question_file=question_file,
+            )
             # 发送开始评估通知
             yield f"data: {json.dumps({'type': 'status', 'stage': 'evaluating', 'message': '开始评估作文...'})}\n\n"
 
@@ -113,8 +183,21 @@ def grade_and_polish():
             # 发送完成通知
             yield f"data: {json.dumps({'type': 'polished_complete', 'polished_answer': polished_answer})}\n\n"
             yield f"data: {json.dumps({'type': 'done'})}\n\n"
+            log_event(
+                "grade_and_polish.done",
+                request_id=getattr(g, "request_id", None),
+                question_file=question_file,
+                comment_chars=len(comment),
+                polished_chars=len(polished_answer),
+            )
 
         except Exception as e:
+            log_event(
+                "grade_and_polish.error",
+                request_id=getattr(g, "request_id", None),
+                error=str(e),
+                question_file=question_file,
+            )
             yield f"data: {json.dumps({'type': 'error', 'message': str(e)})}\n\n"
 
     return Response(

@@ -120,3 +120,17 @@ export async function healthCheck(): Promise<{ status: string }> {
 	}
 	return await response.json();
 }
+
+/**
+ * 下载遥测日志文件
+ */
+export async function downloadTelemetryLog(): Promise<Blob> {
+	const response = await fetch(`${API_BASE_URL}/logs/telemetry`);
+	if (!response.ok) {
+		const error: ApiError = await response.json().catch(() => ({
+			error: `HTTP error! status: ${response.status}`,
+		}));
+		throw new Error(error.error || `HTTP error! status: ${response.status}`);
+	}
+	return await response.blob();
+}

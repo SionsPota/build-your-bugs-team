@@ -1,8 +1,11 @@
 import os
+import time
 import yaml
 from pathlib import Path
 from openai import OpenAI
 from dotenv import load_dotenv
+
+from telemetry import log_event
 
 load_dotenv()
 
@@ -131,9 +134,7 @@ class Evaluator:
             api_key=os.getenv("DASHSCOPE_API_KEY"),
             base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
         )
-        completion = client.chat.completions.create(
-            model="qwen-plus", messages=self.generate_prompt(answer), stream=stream
-        )
+        completion = _call_llm(client, "qwen-plus", self.generate_prompt(answer), stream)
         if stream:
             return completion
         return completion.choices[0].message.content
@@ -166,12 +167,71 @@ class Polisher:
             api_key=os.getenv("DASHSCOPE_API_KEY"),
             base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
         )
-        completion = client.chat.completions.create(
-            model="qwen-plus", messages=self.generate_prompt(), stream=stream
-        )
+        completion = _call_llm(client, "qwen-plus", self.generate_prompt(), stream)
         if stream:
             return completion
         return completion.choices[0].message.content
+
+
+def _call_llm(client: OpenAI, model_name: str, messages, stream: bool = False):
+    """调用 LLM 并记录基础遥测（时延/错误）。"""
+    try:
+        from flask import g
+
+        request_id = getattr(g, "request_id", None)
+    except Exception:
+        request_id = None
+
+    start = time.perf_counter()
+    log_event("llm.call.start", request_id=request_id, llm_model=model_name, stream=stream)
+    try:
+        completion = client.chat.completions.create(
+            model=model_name, messages=messages, stream=stream
+        )
+    except Exception as e:
+        log_event(
+            "llm.call.error",
+            request_id=request_id,
+            llm_model=model_name,
+            llm_latency_ms=int((time.perf_counter() - start) * 1000),
+            llm_error=str(e),
+            stream=stream,
+        )
+        raise
+
+    if not stream:
+        log_event(
+            "llm.call.success",
+            request_id=request_id,
+            llm_model=model_name,
+            llm_latency_ms=int((time.perf_counter() - start) * 1000),
+            stream=False,
+        )
+        return completion
+
+    def _stream_wrapper():
+        try:
+            for chunk in completion:
+                yield chunk
+            log_event(
+                "llm.call.success",
+                request_id=request_id,
+                llm_model=model_name,
+                llm_latency_ms=int((time.perf_counter() - start) * 1000),
+                stream=True,
+            )
+        except Exception as e:
+            log_event(
+                "llm.call.error",
+                request_id=request_id,
+                llm_model=model_name,
+                llm_latency_ms=int((time.perf_counter() - start) * 1000),
+                llm_error=str(e),
+                stream=True,
+            )
+            raise
+
+    return _stream_wrapper()
 
 
 if __name__ == "__main__":

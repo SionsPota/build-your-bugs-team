@@ -3,6 +3,7 @@ import { ref, onMounted, computed } from "vue";
 import {
 	gradeAndPolishStream,
 	healthCheck,
+	downloadTelemetryLog,
 	type StreamEvent,
 } from "./api/service";
 
@@ -16,6 +17,7 @@ const polishedAnswer = ref("");
 const isBackendHealthy = ref<boolean | null>(null);
 const statusMessage = ref<string | null>(null);
 const currentStage = ref<"idle" | "evaluating" | "polishing" | "done">("idle");
+const downloadingLog = ref(false);
 
 // 计算属性：是否有结果
 const hasResults = computed(() => comment.value || polishedAnswer.value);
@@ -118,6 +120,26 @@ const handleClear = () => {
 	currentStage.value = "idle";
 };
 
+// 下载遥测日志
+const handleDownloadLog = async () => {
+	downloadingLog.value = true;
+	try {
+		const blob = await downloadTelemetryLog();
+		const url = URL.createObjectURL(blob);
+		const a = document.createElement("a");
+		a.href = url;
+		a.download = "telemetry.log";
+		a.click();
+		URL.revokeObjectURL(url);
+	} catch (err) {
+		error.value =
+			err instanceof Error ? err.message : "下载日志失败，请检查后端日志接口";
+		console.error("Download log error:", err);
+	} finally {
+		downloadingLog.value = false;
+	}
+};
+
 // 组件挂载时检查后端
 onMounted(() => {
 	checkBackend();
@@ -166,6 +188,14 @@ onMounted(() => {
 
 				<div class="sidebar-actions">
 					<button @click="checkBackend" class="btn-sidebar">检查连接</button>
+					<button
+						@click="handleDownloadLog"
+						class="btn-sidebar"
+						:disabled="downloadingLog"
+					>
+						<span v-if="downloadingLog">下载中...</span>
+						<span v-else>下载遥测日志</span>
+					</button>
 				</div>
 			</div>
 		</aside>

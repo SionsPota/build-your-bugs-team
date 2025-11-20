@@ -50,3 +50,4 @@ vendor/
 
 projects/demo/__pycache__/
 projects/demo/frontend/package-lock.json
+projects/demo/log
