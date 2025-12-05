@@ -76,13 +76,7 @@ DASHSCOPE_API_KEY=your_api_key_here
 python init_db.py
 ```
 
-4. 运行数据库迁移（如果需要）：
-
-```bash
-python migrate_add_score.py
-```
-
-5. 启动后端服务：
+4. 启动后端服务：
 
 ```bash
 python app.py
