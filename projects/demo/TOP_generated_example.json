@@ -1,0 +1,27 @@
+[
+	{
+		"id": 46,
+		"instruction": "Your professor is teaching a class on economics. Write a post responding to the professor's question. In your response, you should do the following:\n*    Express and support your opinion.\n*   Make a contribution to the discussion in your own words.\nAn effective response will contain at least 100 words.",
+		"teacher": "**Professor (Doctor Gupta):** This week, we'll study an issue that is often debated by economists. There are many large industries that, while providing significant economic benefits, engage in practices that result in environmental harm. Some would argue that economic success should never come at the cost of damage to the environment. Do you agree with this view? Why or why not?",
+		"students": [
+			"**Student 1 (Paul):** I can't say I agree. Everyone talks about protecting natural resources, but what about protecting humans? Humans need the ability to work and provide for their families, and sometimes this means creating jobs through industries that might contribute to pollution. Those industries can just be monitored by environmental agencies. That's a win-win solution.",
+			"**Student 2 (Kelly):** I see your point, Paul, but I don't think there are many industries that are so essential for the economy that their impact on the environment can be ignored or merely 'monitored.' Continual environmental damage will one day lead to the extinction of species that are essentials to agriculture. That will endanger our food chain."
+		]
+	},
+	{
+		"id": 46,
+		"instruction": "Your professor is teaching a class on economics. Write a post responding to the professor's question. In your response, you should do the following:\n    Express and support your opinion.\n   Make a contribution to the discussion in your own words.\nAn effective response will contain at least 100 words.",
+		"teacher": "Doctor Gupta",
+		"teacher_content": "This week, we'll study an issue that is often debated by economists. There are many large industries that, while providing significant economic benefits, engage in practices that result in environmental harm. Some would argue that economic success should never come at the cost of damage to the environment. Do you agree with this view? Why or why not?",
+		"students": [
+			{
+				"name": "Paul",
+				"content": "I can't say I agree. Everyone talks about protecting natural resources, but what about protecting humans? Humans need the ability to work and provide for their families, and sometimes this means creating jobs through industries that might contribute to pollution. Those industries can just be monitored by environmental agencies. That's a win-win solution."
+			},
+			{
+				"name": "Kelly",
+				"content": "I see your point, Paul, but I don't think there are many industries that are so essential for the economy that their impact on the environment can be ignored or merely 'monitored.' Continual environmental damage will one day lead to the extinction of species that are essentials to agriculture. That will endanger our food chain."
+			}
+		]
+	}
+]
