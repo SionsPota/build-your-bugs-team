@@ -77,6 +77,7 @@ class History(db.Model):
     # 结果相关字段
     comment = db.Column(db.Text)  # 评语
     polished_answer = db.Column(db.Text)  # 润色后的答案
+    score = db.Column(db.Integer)  # 总评分（从评语中解析得出）
 
     # 元数据
     created_at = db.Column(
@@ -87,7 +88,9 @@ class History(db.Model):
 
     def to_dict(self):
         """转换为字典（用于JSON响应）"""
-        return {
+        from model import CommentParser
+
+        result = {
             "id": self.id,
             "global_id": self.global_id,
             "user_sequence": self.user_sequence,
@@ -96,5 +99,14 @@ class History(db.Model):
             "question": self.question,
             "comment": self.comment,
             "polished_answer": self.polished_answer,
+            "score": self.score,
             "created_at": self.created_at.isoformat() if self.created_at else None,
         }
+
+        # 如果有评语，解析结构化数据
+        if self.comment:
+            parser = CommentParser()
+            parsed_comment = parser.parse_complete(self.comment)
+            result["parsed_comment"] = parsed_comment
+
+        return result

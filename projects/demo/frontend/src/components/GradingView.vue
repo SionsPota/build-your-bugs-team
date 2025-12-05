@@ -2,8 +2,8 @@
 	<main class="grading-view">
 		<GradingResults
 			:answer="answer"
-			:comment="comment"
 			:polished-answer="polishedAnswer"
+			:parsed-comment="parsedComment"
 			:current-stage="currentStage"
 			:loading="loading"
 			:error="error"
@@ -29,13 +29,23 @@ const props = defineProps<{
 
 // 响应式数据
 const answer = ref("");
-const comment = ref("");
 const polishedAnswer = ref("");
 const loading = ref(false);
 const error = ref<string | null>(null);
 const currentStage = ref<"idle" | "evaluating" | "polishing" | "done">("idle");
 const statusMessage = ref<string | null>(null);
 const isEmpty = ref(false); // 是否为空历史记录
+
+// 结构化评语数据
+import type { ParsedComment } from "../api/service";
+const parsedComment = ref<ParsedComment>({
+	strengths: [],
+	weaknesses: [],
+	opportunities: [],
+	overview: "",
+	score: null,
+	raw_text: "",
+});
 
 const emit = defineEmits<{
 	(e: "clear"): void;
@@ -53,8 +63,21 @@ const loadHistoryData = async (historyId: string | number) => {
 			return;
 		}
 		answer.value = history.answer || "";
-		comment.value = history.comment || "";
 		polishedAnswer.value = history.polished_answer || "";
+		// 使用后端返回的解析数据
+		if ((history as any).parsed_comment) {
+			parsedComment.value = (history as any).parsed_comment;
+		} else {
+			// 如果没有解析数据，重置为空
+			parsedComment.value = {
+				strengths: [],
+				weaknesses: [],
+				opportunities: [],
+				overview: "",
+				score: null,
+				raw_text: "",
+			};
+		}
 		currentStage.value = "done";
 	} catch (err) {
 		isEmpty.value = true;
@@ -69,10 +92,18 @@ const loadHistoryData = async (historyId: string | number) => {
 const streamGradingResult = async (historyId: string | number) => {
 	loading.value = true;
 	error.value = null;
-	comment.value = "";
 	polishedAnswer.value = "";
 	currentStage.value = "idle";
 	statusMessage.value = null;
+	// 重置结构化评语数据
+	parsedComment.value = {
+		strengths: [],
+		weaknesses: [],
+		opportunities: [],
+		overview: "",
+		score: null,
+		raw_text: "",
+	};
 
 	try {
 		await gradeAndPolishStreamById(historyId, (event: StreamEvent) => {
@@ -86,15 +117,31 @@ const streamGradingResult = async (historyId: string | number) => {
 					}
 					break;
 
-				case "comment_chunk":
-					if (event.content) {
-						comment.value += event.content;
+				case "comment_parsed":
+					// 实时更新结构化数据
+					if (event.data) {
+						if (event.data.strengths !== undefined) {
+							parsedComment.value.strengths = event.data.strengths;
+						}
+						if (event.data.weaknesses !== undefined) {
+							parsedComment.value.weaknesses = event.data.weaknesses;
+						}
+						if (event.data.opportunities !== undefined) {
+							parsedComment.value.opportunities = event.data.opportunities;
+						}
+						if (event.data.overview !== undefined) {
+							parsedComment.value.overview = event.data.overview;
+						}
+						if (event.data.score !== undefined) {
+							parsedComment.value.score = event.data.score;
+						}
 					}
 					break;
 
 				case "comment_complete":
-					if (event.comment) {
-						comment.value = event.comment;
+					// 更新完整的结构化数据
+					if (event.parsed_comment) {
+						parsedComment.value = event.parsed_comment;
 					}
 					currentStage.value = "polishing";
 					break;
@@ -158,8 +205,21 @@ watch(
 				answer.value = history.answer || "";
 				// 如果已有完整数据，直接显示
 				if (history.comment && history.polished_answer) {
-					comment.value = history.comment;
 					polishedAnswer.value = history.polished_answer;
+					// 使用后端返回的解析数据
+					if ((history as any).parsed_comment) {
+						parsedComment.value = (history as any).parsed_comment;
+					} else {
+						// 如果没有解析数据，重置为空
+						parsedComment.value = {
+							strengths: [],
+							weaknesses: [],
+							opportunities: [],
+							overview: "",
+							score: null,
+							raw_text: "",
+						};
+					}
 					currentStage.value = "done";
 					loading.value = false;
 				} else {

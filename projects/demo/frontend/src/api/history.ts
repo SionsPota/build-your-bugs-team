@@ -1,5 +1,7 @@
 // 历史记录API服务
 
+import type { ParsedComment } from "./service";
+
 export interface History {
 	id: number;
 	global_id: string;
@@ -9,6 +11,8 @@ export interface History {
 	question: string;
 	comment: string | null;
 	polished_answer: string | null;
+	score: number | null; // 总评分
+	parsed_comment?: ParsedComment; // 后端解析后的结构化评语数据
 	created_at: string;
 }
 

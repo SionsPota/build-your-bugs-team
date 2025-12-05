@@ -9,7 +9,9 @@ from user_models import db, History, User
 from flask import jsonify
 
 
-def save_history(user_id, answer, question, comment=None, polished_answer=None):
+def save_history(
+    user_id, answer, question, comment=None, polished_answer=None, score=None
+):
     """
     保存历史记录
     自动生成global_id和user_sequence
@@ -19,9 +21,18 @@ def save_history(user_id, answer, question, comment=None, polished_answer=None):
         question: 题名（字符串）
         comment: 评语（可选）
         polished_answer: 润色后的答案（可选）
+        score: 总评分（可选，如果为None且comment存在，会从comment中解析）
     Returns: (success: bool, message: str, history: History or None)
     """
     try:
+        # 如果score为None且comment存在，尝试从comment中解析score
+        if score is None and comment:
+            from model import CommentParser
+
+            parser = CommentParser()
+            parsed_comment = parser.parse_complete(comment)
+            score = parsed_comment.get("score")
+
         # 生成全局唯一ID
         global_id = str(uuid.uuid4())
 
@@ -39,6 +50,7 @@ def save_history(user_id, answer, question, comment=None, polished_answer=None):
             question=question,
             comment=comment,
             polished_answer=polished_answer,
+            score=score,
         )
         db.session.add(history)
         db.session.commit()

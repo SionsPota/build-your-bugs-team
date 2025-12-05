@@ -238,7 +238,10 @@ def get_history_detail(history_id):
     if not history:
         return jsonify({"error": "历史记录不存在或无权限"}), 404
 
-    return jsonify({"history": history.to_dict()}), 200
+    # 构建返回数据，包含解析后的评语（to_dict方法已经包含parsed_comment）
+    history_dict = history.to_dict()
+
+    return jsonify({"history": history_dict}), 200
 
 
 @app.route("/history/<path:history_id>", methods=["DELETE"])
@@ -688,6 +691,9 @@ def grade_and_polish():
                     if history:
                         history.comment = comment
                         history.polished_answer = polished_answer
+                        # 从解析结果中提取score
+                        if final_parsed and final_parsed.get("score") is not None:
+                            history.score = final_parsed["score"]
                         db.session.commit()
                         yield f"data: {json.dumps({'type': 'history_saved', 'message': '历史记录已保存', 'history_id': history_id})}\n\n"
                 except Exception as e:
@@ -756,7 +762,10 @@ def get_grade_and_polish_stream(history_id):
     if history.comment and history.polished_answer:
 
         def generate_complete():
-            yield f"data: {json.dumps({'type': 'comment_complete', 'comment': history.comment})}\n\n"
+            # 解析已有评语的结构化数据
+            parser = CommentParser()
+            parsed_comment = parser.parse_complete(history.comment)
+            yield f"data: {json.dumps({'type': 'comment_complete', 'parsed_comment': parsed_comment})}\n\n"
             yield f"data: {json.dumps({'type': 'polished_complete', 'polished_answer': history.polished_answer})}\n\n"
             yield f"data: {json.dumps({'type': 'done'})}\n\n"
 
@@ -776,7 +785,9 @@ def get_grade_and_polish_stream(history_id):
             evaluator = Evaluator(question=history.question)
             comment_stream = evaluator.generate_response(history.answer, stream=True)
 
+            # 流式接收评估结果并实时解析
             comment = ""
+            parser = CommentParser()
             yield f"data: {json.dumps({'type': 'status', 'stage': 'evaluating', 'message': '正在生成评语...'})}\n\n"
 
             for chunk in comment_stream:
@@ -787,9 +798,18 @@ def get_grade_and_polish_stream(history_id):
                 ):
                     content = chunk.choices[0].delta.content
                     comment += content
-                    yield f"data: {json.dumps({'type': 'comment_chunk', 'content': content})}\n\n"
 
-            yield f"data: {json.dumps({'type': 'comment_complete', 'comment': comment})}\n\n"
+                    # 尝试解析结构化数据（持续解析）
+                    parsed_update = parser.feed_chunk(content)
+                    if parsed_update:
+                        # 发送解析后的结构化数据更新
+                        yield f"data: {json.dumps({'type': 'comment_parsed', 'data': parsed_update})}\n\n"
+
+            # 最终解析（确保所有数据都被解析）
+            final_parsed = parser.parse_complete(comment)
+
+            # 发送评估完成通知（只包含解析后的数据，不包含原始comment）
+            yield f"data: {json.dumps({'type': 'comment_complete', 'parsed_comment': final_parsed})}\n\n"
 
             yield f"data: {json.dumps({'type': 'status', 'stage': 'polishing', 'message': '开始润色作文...'})}\n\n"
 
@@ -815,6 +835,9 @@ def get_grade_and_polish_stream(history_id):
             try:
                 history.comment = comment
                 history.polished_answer = polished_answer
+                # 从解析结果中提取score
+                if final_parsed and final_parsed.get("score") is not None:
+                    history.score = final_parsed["score"]
                 db.session.commit()
                 yield f"data: {json.dumps({'type': 'history_saved', 'message': '历史记录已保存', 'history_id': history_id})}\n\n"
             except Exception as e:

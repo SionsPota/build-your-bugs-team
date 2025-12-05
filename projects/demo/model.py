@@ -62,18 +62,22 @@ class CommentParser:
         match = re.search(pattern, self.buffer, re.DOTALL | re.IGNORECASE)
 
         if match:
-            content = match.group(1).strip()
+            # 提取区域内容（在END之前的部分）
+            content = match.group(1).strip() if match.group(1) else ""
             items = []
 
-            # 使用正则表达式匹配编号列表项
-            item_pattern = r"^\d+\.\s+(.+?)(?=^\d+\.|$)"
-            for item_match in re.finditer(
-                item_pattern, content, re.MULTILINE | re.DOTALL
-            ):
-                item_text = item_match.group(1).strip()
-                if item_text:
-                    items.append(item_text)
+            # 如果内容不为空，解析列表项
+            if content:
+                # 使用正则表达式匹配编号列表项
+                item_pattern = r"^\d+\.\s+(.+?)(?=^\d+\.|$)"
+                for item_match in re.finditer(
+                    item_pattern, content, re.MULTILINE | re.DOTALL
+                ):
+                    item_text = item_match.group(1).strip()
+                    if item_text:
+                        items.append(item_text)
 
+            # 即使内容为空，也设置空列表（表示区域存在但为空）
             self.parsed_data[section_key] = items
 
     def _parse_overview(self):
@@ -96,37 +100,37 @@ class CommentParser:
                 pass
 
     def feed_chunk(self, chunk: str) -> Optional[Dict]:
-        """流式解析：接收一个文本块，返回解析出的结构化数据（如果有更新）"""
+        """流式解析：接收一个文本块，返回解析出的结构化数据（如果有更新）
+        持续解析：每次chunk都会尝试解析，即使区域未完成也会返回部分结果
+        """
         self.buffer += chunk
         self.parsed_data["raw_text"] = self.buffer
 
         updated = False
         result = {}
 
-        # 尝试解析各个部分
+        # 尝试解析各个部分（持续解析，即使未完成也返回部分结果）
         new_strengths = self._try_parse_section("STRENGTHS:", "strengths")
-        if new_strengths is not None and new_strengths != self.parsed_data["strengths"]:
-            self.parsed_data["strengths"] = new_strengths
-            result["strengths"] = new_strengths
-            updated = True
+        if new_strengths is not None:
+            # 比较列表内容是否发生变化（即使长度相同，内容可能不同）
+            if new_strengths != self.parsed_data["strengths"]:
+                self.parsed_data["strengths"] = new_strengths
+                result["strengths"] = new_strengths
+                updated = True
 
         new_weaknesses = self._try_parse_section("WEAKNESSES:", "weaknesses")
-        if (
-            new_weaknesses is not None
-            and new_weaknesses != self.parsed_data["weaknesses"]
-        ):
-            self.parsed_data["weaknesses"] = new_weaknesses
-            result["weaknesses"] = new_weaknesses
-            updated = True
+        if new_weaknesses is not None:
+            if new_weaknesses != self.parsed_data["weaknesses"]:
+                self.parsed_data["weaknesses"] = new_weaknesses
+                result["weaknesses"] = new_weaknesses
+                updated = True
 
         new_opportunities = self._try_parse_section("OPPORTUNITIES:", "opportunities")
-        if (
-            new_opportunities is not None
-            and new_opportunities != self.parsed_data["opportunities"]
-        ):
-            self.parsed_data["opportunities"] = new_opportunities
-            result["opportunities"] = new_opportunities
-            updated = True
+        if new_opportunities is not None:
+            if new_opportunities != self.parsed_data["opportunities"]:
+                self.parsed_data["opportunities"] = new_opportunities
+                result["opportunities"] = new_opportunities
+                updated = True
 
         new_overview = self._try_parse_overview()
         if new_overview is not None and new_overview != self.parsed_data["overview"]:
@@ -145,26 +149,50 @@ class CommentParser:
     def _try_parse_section(
         self, section_header: str, section_key: str
     ) -> Optional[List[str]]:
-        """尝试解析一个列表部分（可能不完整）"""
+        """尝试解析一个列表部分（可能不完整）
+        持续解析：遇到header就开始填充，遇到1.开始填充第一项，遇到END结束填充该区域
+        """
         # 查找 section_header 的位置
         header_pos = self.buffer.upper().find(section_header.upper())
         if header_pos == -1:
             return None
 
-        # 查找 END 标记
+        # 提取header之后的所有内容（直到下一个区域header或END或文本末尾）
+        # 查找下一个区域header的位置（用于确定当前区域的结束位置）
+        next_headers = [
+            self.buffer.upper().find("STRENGTHS:", header_pos + 1),
+            self.buffer.upper().find("WEAKNESSES:", header_pos + 1),
+            self.buffer.upper().find("OPPORTUNITIES:", header_pos + 1),
+            self.buffer.upper().find("OVERVIEW:", header_pos + 1),
+            self.buffer.upper().find("SCORE:", header_pos + 1),
+        ]
+        # 找到下一个header的位置（排除当前header）
+        next_header_pos = min(
+            [pos for pos in next_headers if pos > header_pos], default=len(self.buffer)
+        )
+
+        # 查找END标记的位置
         end_pos = self.buffer.upper().find("\nEND", header_pos)
-
         if end_pos == -1:
-            # 如果还没找到 END，尝试解析当前内容（可能不完整）
-            content = self.buffer[header_pos + len(section_header) :].strip()
+            end_pos = len(self.buffer)
         else:
-            content = self.buffer[header_pos + len(section_header) : end_pos].strip()
+            end_pos += 4  # 包含 "\nEND" 的长度
 
+        # 确定当前区域的结束位置（取END和下一个header的较小值）
+        section_end_pos = min(end_pos, next_header_pos)
+
+        # 提取当前区域的内容
+        section_start = header_pos + len(section_header)
+        content = self.buffer[section_start:section_end_pos].strip()
+
+        # 如果内容为空且没有遇到END，说明区域刚开始，返回空列表
         if not content:
             return []
 
+        # 解析编号列表项（即使没有END也要解析已出现的内容）
         items = []
-        item_pattern = r"^\d+\.\s+(.+?)(?=^\d+\.|$)"
+        # 匹配编号项：数字. 开头，直到下一个编号项或区域结束
+        item_pattern = r"^\d+\.\s+(.+?)(?=^\d+\.|$|\nEND)"
         for item_match in re.finditer(item_pattern, content, re.MULTILINE | re.DOTALL):
             item_text = item_match.group(1).strip()
             if item_text:

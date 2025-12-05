@@ -77,7 +77,10 @@
 								{{ history.question || "未命名题目" }}
 							</div>
 							<div class="history-meta">
-								{{ formatDate(history.created_at) }}
+								<span v-if="history.score != null" class="history-score">
+									评分：{{ history.score }}
+								</span>
+								<span>{{ formatDate(history.created_at) }}</span>
 							</div>
 						</div>
 						<div class="history-arrow">→</div>
@@ -424,6 +427,19 @@ defineExpose({
 .history-meta {
 	font-size: 0.85rem;
 	color: #999;
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	flex-wrap: wrap;
+}
+
+.history-score {
+	font-size: 0.85rem;
+	color: #667eea;
+	font-weight: 600;
+	background: #e8edff;
+	padding: 0.125rem 0.375rem;
+	border-radius: 3px;
 }
 
 .history-arrow {

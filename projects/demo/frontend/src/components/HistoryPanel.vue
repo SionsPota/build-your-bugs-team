@@ -160,7 +160,12 @@ defineExpose({
 			>
 				<div class="history-header">
 					<span class="history-date">{{ formatDate(history.created_at) }}</span>
-					<span class="history-file">{{ history.question }}</span>
+					<div class="history-meta">
+						<span v-if="history.score != null" class="history-score">
+							评分：{{ history.score }}
+						</span>
+						<span class="history-file">{{ history.question }}</span>
+					</div>
 				</div>
 				<div class="history-preview">
 					<div class="preview-label">原文：</div>
@@ -304,12 +309,33 @@ defineExpose({
 	justify-content: space-between;
 	align-items: center;
 	margin-bottom: 0.75rem;
+	gap: 1rem;
+	flex-wrap: wrap;
 }
 
 .history-date {
 	font-size: 0.875rem;
 	color: #666;
 	font-weight: 500;
+	flex-shrink: 0;
+}
+
+.history-meta {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	flex-wrap: wrap;
+	justify-content: flex-end;
+	min-width: 0;
+}
+
+.history-score {
+	font-size: 0.875rem;
+	color: #667eea;
+	font-weight: 600;
+	background: #e8edff;
+	padding: 0.25rem 0.5rem;
+	border-radius: 4px;
 }
 
 .history-file {
