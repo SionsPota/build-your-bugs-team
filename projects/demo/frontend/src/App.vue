@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import {
 	gradeAndPolishStream,
 	healthCheck,
@@ -8,33 +9,43 @@ import {
 } from "./api/service";
 import { useAuth } from "./composables/useAuth";
 import AuthModal from "./components/AuthModal.vue";
-import HistoryPanel from "./components/HistoryPanel.vue";
 import Sidebar from "./components/Sidebar.vue";
-import GradingView from "./components/GradingView.vue";
-import TOEFLWritingView from "./components/TOEFLWritingView.vue";
-import WelcomeView from "./components/WelcomeView.vue";
 
+const route = useRoute();
+const router = useRouter();
 const { isAuthenticated, currentUser, logout, ensureAuthenticated } = useAuth();
 
 const showAuthModal = ref(false);
-const showHistoryPanel = ref(false);
-const historyPanelRef = ref<{
-	loadHistories: (page?: number) => Promise<void>;
-} | null>(null);
 
 const loading = ref(false);
 const error = ref<string | null>(null);
 const isBackendHealthy = ref<boolean | null>(null);
 const statusMessage = ref<string | null>(null);
 const downloadingLog = ref(false);
-const currentView = ref<"welcome" | "grading" | "writing">("welcome");
-const welcomeViewRef = ref<{ refreshHistory: () => Promise<void> } | null>(
-	null
-);
-const writingViewRef = ref<{
-	setQuestionFile: (file: string) => void;
-} | null>(null);
-const currentHistoryId = ref<number | undefined>(undefined); // 当前评分的历史记录ID
+
+// 根据路由计算当前视图
+const currentView = computed<"welcome" | "grading" | "writing">(() => {
+	if (route.name === "home") return "welcome";
+	if (route.name === "write") return "writing";
+	if (route.name === "history") return "grading";
+	return "welcome";
+});
+
+// 是否显示侧边栏（非首页时显示）
+const showSidebar = computed(() => route.name !== "home");
+
+// 侧边栏展开状态，从localStorage读取
+const getInitialSidebarState = (): boolean => {
+	const saved = localStorage.getItem("sidebarExpanded");
+	return saved ? saved === "true" : false; // 默认隐藏
+};
+const sidebarExpanded = ref<boolean>(getInitialSidebarState());
+
+// 切换侧边栏展开状态
+const toggleSidebar = () => {
+	sidebarExpanded.value = !sidebarExpanded.value;
+	localStorage.setItem("sidebarExpanded", String(sidebarExpanded.value));
+};
 
 const checkBackend = async () => {
 	try {
@@ -47,9 +58,9 @@ const checkBackend = async () => {
 };
 
 const handleClear = () => {
-	currentHistoryId.value = undefined;
 	error.value = null;
 	statusMessage.value = null;
+	router.push("/home");
 };
 
 const handleDownloadLog = async () => {
@@ -73,7 +84,7 @@ const handleDownloadLog = async () => {
 
 const handleLogout = () => {
 	logout();
-	showHistoryPanel.value = false;
+	router.push("/home");
 };
 
 const handleWritingSubmit = async (data: {
@@ -84,7 +95,6 @@ const handleWritingSubmit = async (data: {
 }) => {
 	loading.value = true;
 	error.value = null;
-	currentHistoryId.value = undefined;
 
 	try {
 		// 发送评分请求，获取历史记录ID
@@ -92,10 +102,9 @@ const handleWritingSubmit = async (data: {
 			data.text,
 			data.questionFile,
 			(event: StreamEvent) => {
-				// 收到 history_id 后，切换到 GradingView
+				// 收到 history_id 后，导航到历史记录页面
 				if (event.type === "history_id" && event.history_id) {
-					currentHistoryId.value = event.history_id;
-					currentView.value = "grading";
+					router.push(`/history/${event.history_id}`);
 					loading.value = false;
 				}
 			}
@@ -103,8 +112,7 @@ const handleWritingSubmit = async (data: {
 
 		// 如果直接返回了ID（非流式情况）
 		if (historyId !== null && historyId !== undefined) {
-			currentHistoryId.value = historyId;
-			currentView.value = "grading";
+			router.push(`/history/${historyId}`);
 		}
 	} catch (err) {
 		error.value =
@@ -120,37 +128,29 @@ const handleWelcomeLogin = () => {
 };
 
 const handleWelcomeSelectQuestion = (file: string) => {
-	currentView.value = "writing";
-	// 通过ref设置TOEFLWritingView的题目文件
-	setTimeout(() => {
-		if (writingViewRef.value) {
-			writingViewRef.value.setQuestionFile(file);
-		}
-	}, 0);
+	router.push({ path: "/write", query: { question: file } });
 };
 
 const handleWelcomeViewHistory = (history: any) => {
 	if (history.id) {
-		currentHistoryId.value = history.id;
-		currentView.value = "grading";
-		showHistoryPanel.value = true;
-		if (historyPanelRef.value) {
-			historyPanelRef.value.loadHistories();
-		}
+		router.push(`/history/${history.id}`);
 	}
 };
 
 const handleWelcomeViewAllHistory = () => {
-	currentView.value = "grading";
-	showHistoryPanel.value = true;
-	if (historyPanelRef.value) {
-		historyPanelRef.value.loadHistories();
-	}
+	// 可以导航到第一个历史记录或保持当前逻辑
 };
 
 const handleViewChange = (view: "welcome" | "grading" | "writing") => {
-	currentView.value = view;
+	if (view === "welcome") {
+		router.push("/home");
+	} else if (view === "writing") {
+		router.push("/write");
+	}
+	// 移除直接切换到评分界面的逻辑，评分界面只能通过历史记录访问
 };
+
+// 路由变化监听（如果需要可以在这里添加其他逻辑）
 
 onMounted(async () => {
 	checkBackend();
@@ -160,50 +160,45 @@ onMounted(async () => {
 
 <template>
 	<div class="app-container">
-		<WelcomeView
-			v-if="currentView === 'welcome'"
-			ref="welcomeViewRef"
-			@login="handleWelcomeLogin"
-			@select-question="handleWelcomeSelectQuestion"
-			@view-history="handleWelcomeViewHistory"
-			@view-all-history="handleWelcomeViewAllHistory"
+		<!-- 侧边栏贴纸按钮 -->
+		<button
+			v-if="showSidebar"
+			class="sidebar-toggle-btn"
+			:class="{ expanded: sidebarExpanded }"
+			@click="toggleSidebar"
+			:title="sidebarExpanded ? '隐藏侧边栏' : '显示侧边栏'"
+		>
+			<span class="toggle-icon">{{ sidebarExpanded ? "◀" : "▶" }}</span>
+		</button>
+
+		<Sidebar
+			v-if="showSidebar && sidebarExpanded"
+			:is-authenticated="isAuthenticated"
+			:current-user="currentUser"
+			:backend-healthy="isBackendHealthy"
+			:loading="loading"
+			:status-message="statusMessage"
+			:current-view="currentView"
+			:downloading-log="downloadingLog"
+			@login="showAuthModal = true"
+			@logout="handleLogout"
+			@check-backend="checkBackend"
+			@view-change="handleViewChange"
+			@download-log="handleDownloadLog"
 		/>
 
-		<template v-else>
-			<Sidebar
-				:is-authenticated="isAuthenticated"
-				:current-user="currentUser"
-				:show-history="showHistoryPanel"
-				:backend-healthy="isBackendHealthy"
-				:loading="loading"
-				:status-message="statusMessage"
-				:current-view="currentView"
-				:downloading-log="downloadingLog"
-				@login="showAuthModal = true"
-				@logout="handleLogout"
-				@toggle-history="showHistoryPanel = !showHistoryPanel"
-				@check-backend="checkBackend"
-				@view-change="handleViewChange"
-				@download-log="handleDownloadLog"
-			/>
-
-			<HistoryPanel
-				v-if="showHistoryPanel && isAuthenticated"
-				ref="historyPanelRef"
-			/>
-
-			<GradingView
-				v-if="currentView === 'grading'"
-				:history-id="currentHistoryId"
-				@clear="handleClear"
-			/>
-
-			<TOEFLWritingView
-				v-if="currentView === 'writing'"
-				ref="writingViewRef"
+		<router-view v-slot="{ Component, route: routeInfo }">
+			<component
+				:is="Component"
+				:key="routeInfo.path"
 				@submit="handleWritingSubmit"
+				@clear="handleClear"
+				@login="handleWelcomeLogin"
+				@select-question="handleWelcomeSelectQuestion"
+				@view-history="handleWelcomeViewHistory"
+				@view-all-history="handleWelcomeViewAllHistory"
 			/>
-		</template>
+		</router-view>
 
 		<AuthModal :show="showAuthModal" @close="showAuthModal = false" />
 	</div>
@@ -216,5 +211,42 @@ onMounted(async () => {
 	background: #f5f5f5;
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
 		"Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+	position: relative;
+}
+
+.sidebar-toggle-btn {
+	position: fixed;
+	left: 0;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 24px;
+	height: 60px;
+	background: #667eea;
+	color: white;
+	border: none;
+	border-radius: 0 8px 8px 0;
+	cursor: pointer;
+	z-index: 1001;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
+	transition: left 0.3s ease, background 0.2s ease;
+	padding: 0;
+}
+
+.sidebar-toggle-btn:hover {
+	background: #5568d3;
+}
+
+.sidebar-toggle-btn.expanded {
+	left: 250px; /* 侧边栏宽度为250px */
+}
+
+.toggle-icon {
+	font-size: 12px;
+	font-weight: bold;
+	user-select: none;
+	line-height: 1;
 }
 </style>

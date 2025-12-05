@@ -1,55 +1,84 @@
 <template>
 	<div class="grading-results">
-		<div class="comparison-section">
-			<div class="comparison-panel">
-				<div class="panel-header">
-					<h3>原文</h3>
+		<!-- 空状态提示 -->
+		<div v-if="isEmpty" class="empty-state">
+			<div class="empty-icon">📭</div>
+			<h2 class="empty-title">未找到历史记录</h2>
+			<p class="empty-message">
+				该历史记录不存在或已被删除，请返回主面板查看其他记录。
+			</p>
+			<div class="empty-actions">
+				<button @click="handleGoHome" class="btn btn-primary">
+					返回主面板
+				</button>
+			</div>
+		</div>
+
+		<!-- 正常内容 -->
+		<template v-else>
+			<div class="comparison-section">
+				<div class="comparison-panel">
+					<div class="panel-header">
+						<h3>原文</h3>
+					</div>
+					<div class="panel-content">
+						<div class="text-content">{{ answer }}</div>
+					</div>
 				</div>
-				<div class="panel-content">
-					<div class="text-content">{{ answer }}</div>
+
+				<div class="comparison-panel">
+					<div class="panel-header">
+						<h3>润色后</h3>
+						<span
+							v-if="currentStage === 'polishing' && !polishedAnswer"
+							class="loading-indicator"
+						>
+							生成中...
+						</span>
+					</div>
+					<div class="panel-content">
+						<div class="text-content">
+							{{ polishedAnswer || "正在生成..." }}
+						</div>
+					</div>
 				</div>
 			</div>
 
-			<div class="comparison-panel">
-				<div class="panel-header">
-					<h3>润色后</h3>
+			<div class="comment-section">
+				<div class="comment-header">
+					<h3>评分评语</h3>
 					<span
-						v-if="currentStage === 'polishing' && !polishedAnswer"
+						v-if="currentStage === 'evaluating' && !comment"
 						class="loading-indicator"
 					>
 						生成中...
 					</span>
 				</div>
-				<div class="panel-content">
-					<div class="text-content">
-						{{ polishedAnswer || "正在生成..." }}
-					</div>
+				<div class="comment-content">
+					<div class="text-content">{{ comment || "正在生成评语..." }}</div>
 				</div>
 			</div>
-		</div>
 
-		<div class="comment-section">
-			<div class="comment-header">
-				<h3>评分评语</h3>
-				<span
-					v-if="currentStage === 'evaluating' && !comment"
-					class="loading-indicator"
-				>
-					生成中...
-				</span>
+			<!-- 错误提示 -->
+			<div v-if="error" class="error-message">
+				{{ error }}
 			</div>
-			<div class="comment-content">
-				<div class="text-content">{{ comment || "正在生成评语..." }}</div>
-			</div>
-		</div>
 
-		<div class="results-actions">
-			<button @click="$emit('clear')" class="btn">重新开始</button>
-		</div>
+			<div class="results-actions">
+				<button @click="$emit('clear')" class="btn">重新开始</button>
+				<button @click="handleGoHome" class="btn btn-secondary">
+					返回主面板
+				</button>
+			</div>
+		</template>
 	</div>
 </template>
 
 <script setup lang="ts">
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
 defineProps<{
 	answer: string;
 	comment: string;
@@ -57,11 +86,16 @@ defineProps<{
 	currentStage: "idle" | "evaluating" | "polishing" | "done";
 	loading?: boolean;
 	error?: string | null;
+	isEmpty?: boolean;
 }>();
 
-defineEmits<{
+const emit = defineEmits<{
 	(e: "clear"): void;
 }>();
+
+const handleGoHome = () => {
+	router.push("/home");
+};
 </script>
 
 <style scoped>
@@ -143,6 +177,7 @@ defineEmits<{
 .results-actions {
 	display: flex;
 	justify-content: center;
+	gap: 1rem;
 }
 
 .btn {
@@ -151,10 +186,67 @@ defineEmits<{
 	background: #fff;
 	cursor: pointer;
 	border-radius: 4px;
+	transition: all 0.2s;
 }
 
 .btn:hover {
 	background: #f5f5f5;
+}
+
+.btn-primary {
+	background: #667eea;
+	color: white;
+	border-color: #667eea;
+}
+
+.btn-primary:hover {
+	background: #5568d3;
+	border-color: #5568d3;
+}
+
+.btn-secondary {
+	background: #f5f5f5;
+	color: #333;
+}
+
+.btn-secondary:hover {
+	background: #e0e0e0;
+}
+
+.empty-state {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 4rem 2rem;
+	text-align: center;
+	min-height: 400px;
+}
+
+.empty-icon {
+	font-size: 4rem;
+	margin-bottom: 1rem;
+	opacity: 0.6;
+}
+
+.empty-title {
+	margin: 0 0 1rem 0;
+	font-size: 1.5rem;
+	color: #333;
+	font-weight: 600;
+}
+
+.empty-message {
+	margin: 0 0 2rem 0;
+	color: #666;
+	font-size: 1rem;
+	line-height: 1.6;
+	max-width: 400px;
+}
+
+.empty-actions {
+	display: flex;
+	gap: 1rem;
 }
 
 .error-message {

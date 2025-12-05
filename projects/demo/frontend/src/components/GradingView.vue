@@ -7,6 +7,7 @@
 			:current-stage="currentStage"
 			:loading="loading"
 			:error="error"
+			:is-empty="isEmpty"
 			@clear="handleClear"
 		/>
 	</main>
@@ -23,7 +24,7 @@ import {
 import type { History } from "../api/history";
 
 const props = defineProps<{
-	historyId?: number; // 历史记录ID，用于加载已有数据或流式接收新数据
+	historyId?: string | number; // 历史记录ID（UUID或user_sequence），用于加载已有数据或流式接收新数据
 }>();
 
 // 响应式数据
@@ -34,22 +35,29 @@ const loading = ref(false);
 const error = ref<string | null>(null);
 const currentStage = ref<"idle" | "evaluating" | "polishing" | "done">("idle");
 const statusMessage = ref<string | null>(null);
+const isEmpty = ref(false); // 是否为空历史记录
 
 const emit = defineEmits<{
 	(e: "clear"): void;
 }>();
 
 // 加载历史记录数据
-const loadHistoryData = async (historyId: number) => {
+const loadHistoryData = async (historyId: string | number) => {
 	loading.value = true;
 	error.value = null;
+	isEmpty.value = false;
 	try {
 		const history: History = await getHistoryById(historyId);
+		if (!history) {
+			isEmpty.value = true;
+			return;
+		}
 		answer.value = history.answer || "";
 		comment.value = history.comment || "";
 		polishedAnswer.value = history.polished_answer || "";
 		currentStage.value = "done";
 	} catch (err) {
+		isEmpty.value = true;
 		error.value = err instanceof Error ? err.message : "加载历史记录失败";
 		console.error("Load history error:", err);
 	} finally {
@@ -58,7 +66,7 @@ const loadHistoryData = async (historyId: number) => {
 };
 
 // 流式接收评分结果
-const streamGradingResult = async (historyId: number) => {
+const streamGradingResult = async (historyId: string | number) => {
 	loading.value = true;
 	error.value = null;
 	comment.value = "";
@@ -138,9 +146,15 @@ watch(
 	() => props.historyId,
 	async (newId) => {
 		if (newId) {
+			isEmpty.value = false;
 			// 先尝试加载历史记录数据
 			try {
 				const history: History = await getHistoryById(newId);
+				if (!history) {
+					isEmpty.value = true;
+					loading.value = false;
+					return;
+				}
 				answer.value = history.answer || "";
 				// 如果已有完整数据，直接显示
 				if (history.comment && history.polished_answer) {
@@ -153,9 +167,19 @@ watch(
 					await streamGradingResult(newId);
 				}
 			} catch (err) {
-				// 如果加载失败，尝试流式接收
-				await streamGradingResult(newId);
+				// 如果加载失败，检查是否是404错误（记录不存在）
+				if (err instanceof Error && err.message.includes("404")) {
+					isEmpty.value = true;
+					loading.value = false;
+				} else {
+					// 其他错误，尝试流式接收
+					await streamGradingResult(newId);
+				}
 			}
+		} else {
+			// 没有historyId，显示空状态
+			isEmpty.value = true;
+			loading.value = false;
 		}
 	},
 	{ immediate: true }
@@ -165,6 +189,9 @@ onMounted(() => {
 	if (props.historyId) {
 		// 组件挂载时如果有 historyId，加载数据
 		loadHistoryData(props.historyId);
+	} else {
+		// 没有historyId，显示空状态
+		isEmpty.value = true;
 	}
 });
 </script>

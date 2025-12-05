@@ -219,10 +219,15 @@ def get_history():
         return jsonify({"error": f"获取历史记录失败: {str(e)}"}), 500
 
 
-@app.route("/history/<int:history_id>", methods=["GET"])
+@app.route("/history/<path:history_id>", methods=["GET"])
 @jwt_required()
 def get_history_detail(history_id):
-    """获取单条历史记录详情"""
+    """
+    获取单条历史记录详情（需要用户token）
+    只支持通过以下方式查询（不允许使用主键id）：
+    - global_id（UUID字符串）：/history/550e8400-e29b-41d4-a716-446655440000
+    - user_sequence（用户内部序号，整数）：/history/5
+    """
     user = get_current_user()
     if not user:
         return jsonify({"error": "用户不存在"}), 404
@@ -234,10 +239,15 @@ def get_history_detail(history_id):
     return jsonify({"history": history.to_dict()}), 200
 
 
-@app.route("/history/<int:history_id>", methods=["DELETE"])
+@app.route("/history/<path:history_id>", methods=["DELETE"])
 @jwt_required()
 def delete_history_route(history_id):
-    """删除历史记录"""
+    """
+    删除历史记录（需要用户token）
+    只支持通过以下方式查询（不允许使用主键id）：
+    - global_id（UUID字符串）：/history/550e8400-e29b-41d4-a716-446655440000
+    - user_sequence（用户内部序号，整数）：/history/5
+    """
     user = get_current_user()
     if not user:
         return jsonify({"error": "用户不存在"}), 404
@@ -490,7 +500,8 @@ def grade_and_polish():
                         polished_answer="",  # 暂时为空，后续更新
                     )
                     if success and history:
-                        history_id = history.id
+                        # 使用global_id作为history_id返回（不暴露主键）
+                        history_id = history.global_id
                         # 发送历史记录ID
                         yield f"data: {json.dumps({'type': 'history_id', 'history_id': history_id})}\n\n"
                 except Exception as e:
@@ -550,10 +561,9 @@ def grade_and_polish():
             # 如果用户已登录，更新历史记录
             if current_user and history_id:
                 try:
-                    from user_models import History
-
-                    history = History.query.get(history_id)
-                    if history and history.user_id == current_user.id:
+                    # 使用get_history_by_id以支持多种ID类型
+                    history = get_history_by_id(history_id, current_user.id)
+                    if history:
                         history.comment = comment
                         history.polished_answer = polished_answer
                         db.session.commit()
@@ -599,25 +609,23 @@ def grade_and_polish():
     )
 
 
-@app.route("/grade_and_polish/<int:history_id>", methods=["GET"])
-@jwt_required(optional=True)
+@app.route("/grade_and_polish/<path:history_id>", methods=["GET"])
+@jwt_required()
 def get_grade_and_polish_stream(history_id):
     """
-    通过历史记录ID获取流式评分结果
+    通过历史记录ID获取流式评分结果（需要用户token）
     用于重新连接或查看正在进行的评分
+    只支持通过以下方式查询（不允许使用主键id）：
+    - global_id（UUID字符串）
+    - user_sequence（用户内部序号，整数）
     """
-    # 尝试获取当前用户
-    current_user = None
-    try:
-        current_user = get_current_user()
-    except Exception:
-        pass
+    # 获取当前用户（必须登录）
+    current_user = get_current_user()
+    if not current_user:
+        return jsonify({"error": "需要登录"}), 401
 
     # 获取历史记录
-    if current_user:
-        history = get_history_by_id(history_id, current_user.id)
-    else:
-        return jsonify({"error": "需要登录"}), 401
+    history = get_history_by_id(history_id, current_user.id)
 
     if not history:
         return jsonify({"error": "历史记录不存在"}), 404

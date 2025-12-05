@@ -112,9 +112,7 @@
 							<button class="tool-btn primary" @click="execCmd('cut')">
 								Cut
 							</button>
-							<button class="tool-btn secondary" @click="execCmd('paste')">
-								Paste
-							</button>
+							<button class="tool-btn secondary" disabled>Paste</button>
 							<button class="tool-btn secondary" @click="execCmd('undo')">
 								Undo
 							</button>
@@ -298,7 +296,7 @@ const emit = defineEmits<{
 }>();
 </script>
 
-<style scoped>
+<style>
 :root {
 	--primary-color: #005652; /* ETS Deep Teal */
 	--bg-color: #f4f4f4;
@@ -306,7 +304,9 @@ const emit = defineEmits<{
 	--border-radius: 8px;
 	--btn-grey: #e0e0e0;
 }
+</style>
 
+<style scoped>
 .toefl-writing-container {
 	margin: 0;
 	padding: 0;

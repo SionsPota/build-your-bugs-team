@@ -120,9 +120,10 @@ export async function gradeAndPolishStream(
 
 /**
  * 通过历史记录ID流式获取评分结果
+ * 支持UUID（字符串）或user_sequence（数字）作为ID
  */
 export async function gradeAndPolishStreamById(
-	historyId: number,
+	historyId: string | number,
 	onEvent: StreamCallback
 ): Promise<void> {
 	const response = await fetch(

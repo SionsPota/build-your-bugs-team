@@ -1,22 +1,5 @@
 <template>
 	<div class="action-section">
-		<button @click="$emit('view-change', 'welcome')" class="btn">
-			返回欢迎界面
-		</button>
-		<button
-			@click="
-				$emit(
-					'view-change',
-					props.currentView === 'grading' ? 'writing' : 'grading'
-				)
-			"
-			class="btn"
-			:class="{ active: props.currentView === 'writing' }"
-		>
-			{{
-				props.currentView === "grading" ? "切换到写作界面" : "切换到评分界面"
-			}}
-		</button>
 		<button @click="$emit('check-backend')" class="btn">检查连接</button>
 		<button
 			@click="$emit('download-log')"
@@ -29,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-const props = defineProps<{
+defineProps<{
 	currentView: "welcome" | "grading" | "writing";
 	downloadingLog: boolean;
 }>();

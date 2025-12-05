@@ -2,6 +2,7 @@
 用户系统数据库模型
 """
 
+import uuid
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -61,6 +62,14 @@ class History(db.Model):
         db.Integer, db.ForeignKey("users.id"), nullable=False, index=True
     )
 
+    # ID系统：支持两种查询方式
+    global_id = db.Column(
+        db.String(36), unique=True, nullable=False, index=True
+    )  # 全局唯一ID（UUID）
+    user_sequence = db.Column(
+        db.Integer, nullable=False, index=True
+    )  # 用户内部序号（从1开始）
+
     # 请求相关字段
     answer = db.Column(db.Text, nullable=False)  # 原始答案
     question_file = db.Column(db.String(255), default="test.yaml")  # 题目文件
@@ -80,6 +89,8 @@ class History(db.Model):
         """转换为字典（用于JSON响应）"""
         return {
             "id": self.id,
+            "global_id": self.global_id,
+            "user_sequence": self.user_sequence,
             "user_id": self.user_id,
             "answer": self.answer,
             "question_file": self.question_file,

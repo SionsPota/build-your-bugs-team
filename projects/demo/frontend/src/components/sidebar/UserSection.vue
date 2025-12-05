@@ -21,15 +21,12 @@
 			<button v-if="!isAuthenticated" @click="$emit('login')" class="btn">
 				登录/注册
 			</button>
-			<button v-else @click="$emit('logout')" class="btn">登出</button>
-			<button
-				v-if="isAuthenticated"
-				@click="$emit('toggle-history')"
-				class="btn"
-				:class="{ active: showHistory }"
-			>
-				{{ showHistory ? "隐藏历史" : "查看历史" }}
-			</button>
+			<template v-else>
+				<button @click="$emit('view-change', 'welcome')" class="btn">
+					主面板
+				</button>
+				<button @click="$emit('logout')" class="btn">登出</button>
+			</template>
 		</div>
 	</div>
 </template>
@@ -38,19 +35,18 @@
 defineProps<{
 	isAuthenticated: boolean;
 	currentUser: any;
-	showHistory: boolean;
 }>();
 
 defineEmits<{
 	(e: "login"): void;
 	(e: "logout"): void;
-	(e: "toggle-history"): void;
+	(e: "view-change", view: "welcome" | "grading" | "writing"): void;
 }>();
 </script>
 
 <style scoped>
 .user-section {
-	padding: 1rem 0;
+	padding: 0;
 }
 
 .user-info {

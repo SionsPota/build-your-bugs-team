@@ -2,6 +2,8 @@
 
 export interface History {
 	id: number;
+	global_id: string;
+	user_sequence: number;
 	user_id: number;
 	answer: string;
 	question_file: string;
@@ -81,8 +83,11 @@ export async function getHistories(
 
 /**
  * 获取单条历史记录详情
+ * 支持UUID（字符串）或user_sequence（数字）作为ID
  */
-export async function getHistoryById(historyId: number): Promise<History> {
+export async function getHistoryById(
+	historyId: string | number
+): Promise<History> {
 	const response = await fetch(`${API_BASE_URL}/history/${historyId}`, {
 		method: "GET",
 		headers: getAuthHeaders(),
@@ -99,8 +104,9 @@ export async function getHistoryById(historyId: number): Promise<History> {
 
 /**
  * 删除历史记录
+ * 支持UUID（字符串）或user_sequence（数字）作为ID
  */
-export async function deleteHistory(historyId: number): Promise<void> {
+export async function deleteHistory(historyId: string | number): Promise<void> {
 	const response = await fetch(`${API_BASE_URL}/history/${historyId}`, {
 		method: "DELETE",
 		headers: getAuthHeaders(),
