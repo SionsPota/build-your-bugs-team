@@ -75,6 +75,28 @@ def migrate_existing_database():
                     )
             print(f"  已为 {len(user_ids)} 个用户的记录分配 user_sequence")
 
+        # 迁移question_file字段到question字段
+        if "question_file" in columns and "question" not in columns:
+            print("迁移 question_file 字段到 question 字段...")
+            # 添加新字段
+            cursor.execute("ALTER TABLE histories ADD COLUMN question TEXT")
+            # 复制数据：如果question_file是数字字符串，直接复制；否则尝试提取题名
+            cursor.execute("SELECT id, question_file FROM histories")
+            rows = cursor.fetchall()
+            for history_id, question_file_value in rows:
+                if question_file_value:
+                    # 如果question_file是数字字符串（题名），直接使用
+                    # 否则保持原值（兼容旧数据）
+                    cursor.execute(
+                        "UPDATE histories SET question = ? WHERE id = ?",
+                        (question_file_value, history_id),
+                    )
+            print(f"  已迁移 {len(rows)} 条记录的 question 字段")
+
+            # 删除旧字段（SQLite不支持直接删除列，需要重建表）
+            print("  注意：SQLite不支持直接删除列，question_file字段将保留但不再使用")
+            print("  如需完全删除，请手动重建表或使用迁移工具")
+
         # 创建索引
         try:
             cursor.execute(
@@ -82,6 +104,9 @@ def migrate_existing_database():
             )
             cursor.execute(
                 "CREATE INDEX IF NOT EXISTS idx_histories_user_sequence ON histories(user_id, user_sequence)"
+            )
+            cursor.execute(
+                "CREATE INDEX IF NOT EXISTS idx_histories_question ON histories(question)"
             )
         except Exception as e:
             print(f"  索引创建警告: {e}")
@@ -102,7 +127,7 @@ def init_database():
         print("数据库表创建成功！")
 
         # 如果表已存在，尝试迁移现有数据库
-        migrate_existing_database()
+        # migrate_existing_database()
 
         # 可选：创建管理员用户
         admin_username = "admin"

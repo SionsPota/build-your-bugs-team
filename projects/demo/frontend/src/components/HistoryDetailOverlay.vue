@@ -70,8 +70,8 @@ const canShow = computed(() => props.show && props.history !== null);
 					</div>
 
 					<div class="detail-section">
-						<div class="detail-label">题目文件</div>
-						<div class="detail-value">{{ history!.question_file }}</div>
+						<div class="detail-label">题名</div>
+						<div class="detail-value">{{ history!.question }}</div>
 					</div>
 
 					<div class="detail-section">

@@ -72,7 +72,7 @@ class History(db.Model):
 
     # 请求相关字段
     answer = db.Column(db.Text, nullable=False)  # 原始答案
-    question_file = db.Column(db.String(255), default="test.yaml")  # 题目文件
+    question = db.Column(db.String(255), nullable=False)  # 题名（字符串）
 
     # 结果相关字段
     comment = db.Column(db.Text)  # 评语
@@ -93,7 +93,7 @@ class History(db.Model):
             "user_sequence": self.user_sequence,
             "user_id": self.user_id,
             "answer": self.answer,
-            "question_file": self.question_file,
+            "question": self.question,
             "comment": self.comment,
             "polished_answer": self.polished_answer,
             "created_at": self.created_at.isoformat() if self.created_at else None,

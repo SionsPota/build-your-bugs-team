@@ -6,7 +6,7 @@ export interface History {
 	user_sequence: number;
 	user_id: number;
 	answer: string;
-	question_file: string;
+	question: string;
 	comment: string | null;
 	polished_answer: string | null;
 	created_at: string;

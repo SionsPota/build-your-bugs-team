@@ -74,7 +74,7 @@
 						<div class="history-icon">📚</div>
 						<div class="history-info">
 							<div class="history-title">
-								{{ history.question_file || "未命名题目" }}
+								{{ history.question || "未命名题目" }}
 							</div>
 							<div class="history-meta">
 								{{ formatDate(history.created_at) }}

@@ -241,7 +241,7 @@ def _call_llm(client: OpenAI, model_name: str, messages, stream: bool = False):
 
 
 if __name__ == "__main__":
-    evaluator = Evaluator(question_file="test.yaml")
+    evaluator = Evaluator(question="44")
     answer = "Claire presents a convincing argument indicating that the biggest mistake people make when buying tech products is mismatch of the product's capability and actual need. Admittedlty, mismatch would cause unneccesary cost wich is diffinetely bad. However, considering people can gradually develop their needs that match the product will, I am inclined that the biggest mistake is overlooking detailed information and making impulsive purchases. Nowadays, more and more companies lie to their consumers about the detailed configuration about their products. Mistakenly buying one machine that does not have the ideal capability you want will not only influence your work and study, but also waste your money. For example, my old grandpa bought a television impulsively simply because the client told him that the TV has cutting-edge technology while its resolution is actually awful. Finally my grandpa had to buy a new one for its bad experience."
     comment = evaluator.generate_response(answer)
     polisher = Polisher(answer, comment)

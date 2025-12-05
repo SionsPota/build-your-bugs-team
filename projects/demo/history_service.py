@@ -9,10 +9,16 @@ from user_models import db, History, User
 from flask import jsonify
 
 
-def save_history(user_id, answer, question_file, comment=None, polished_answer=None):
+def save_history(user_id, answer, question, comment=None, polished_answer=None):
     """
     保存历史记录
     自动生成global_id和user_sequence
+    Args:
+        user_id: 用户ID
+        answer: 原始答案
+        question: 题名（字符串）
+        comment: 评语（可选）
+        polished_answer: 润色后的答案（可选）
     Returns: (success: bool, message: str, history: History or None)
     """
     try:
@@ -30,7 +36,7 @@ def save_history(user_id, answer, question_file, comment=None, polished_answer=N
             global_id=global_id,
             user_sequence=user_sequence,
             answer=answer,
-            question_file=question_file,
+            question=question,
             comment=comment,
             polished_answer=polished_answer,
         )

@@ -524,7 +524,7 @@ def grade_and_polish_sync():
                 save_history(
                     user_id=current_user.id,
                     answer=answer,
-                    question_file=question,  # 保存题名
+                    question=question,  # 保存题名
                     comment=comment,
                     polished_answer=polished_answer,
                 )
@@ -594,7 +594,7 @@ def grade_and_polish():
                     success, message, history = save_history(
                         user_id=current_user.id,
                         answer=answer,
-                        question_file=question,  # 保存题名
+                        question=question,  # 保存题名
                         comment="",  # 暂时为空，后续更新
                         polished_answer="",  # 暂时为空，后续更新
                     )
@@ -749,8 +749,8 @@ def get_grade_and_polish_stream(history_id):
     # 如果还没有完整结果，重新执行评分
     def generate():
         try:
-            # history.question_file现在统一为题名
-            evaluator = Evaluator(question=history.question_file)
+            # history.question现在统一为题名
+            evaluator = Evaluator(question=history.question)
             comment_stream = evaluator.generate_response(history.answer, stream=True)
 
             comment = ""

@@ -131,7 +131,7 @@ defineExpose({
 			>
 				<div class="history-header-item">
 					<span class="history-date">{{ formatDate(history.created_at) }}</span>
-					<span class="history-file">{{ history.question_file }}</span>
+					<span class="history-file">{{ history.question }}</span>
 				</div>
 				<div class="history-preview">
 					<div class="preview-text">{{ truncateText(history.answer) }}</div>
