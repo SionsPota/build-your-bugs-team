@@ -1,5 +1,9 @@
 flask
 flask-cors
+flask-sqlalchemy
+flask-jwt-extended
+flask-migrate
 openai
 python-dotenv
 pyyaml
+bcrypt

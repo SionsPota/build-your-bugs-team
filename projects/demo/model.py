@@ -39,6 +39,24 @@ def load_question(yaml_file: str) -> dict:
     }
 
 
+def get_question_files() -> list[str]:
+    """获取所有可用的题目文件列表
+
+    Returns:
+        list[str]: 题目文件名列表（如 ["test.yaml", "example.yaml"]）
+    """
+    if not PROBLEMS_DIR.exists():
+        return []
+
+    question_files = []
+    for file_path in PROBLEMS_DIR.glob("*.yaml"):
+        question_files.append(file_path.name)
+    for file_path in PROBLEMS_DIR.glob("*.yml"):
+        question_files.append(file_path.name)
+
+    return sorted(question_files)
+
+
 class Evaluator:
     def __init__(
         self,
@@ -134,7 +152,9 @@ class Evaluator:
             api_key=os.getenv("DASHSCOPE_API_KEY"),
             base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
         )
-        completion = _call_llm(client, "qwen-plus", self.generate_prompt(answer), stream)
+        completion = _call_llm(
+            client, "qwen-plus", self.generate_prompt(answer), stream
+        )
         if stream:
             return completion
         return completion.choices[0].message.content
@@ -183,7 +203,9 @@ def _call_llm(client: OpenAI, model_name: str, messages, stream: bool = False):
         request_id = None
 
     start = time.perf_counter()
-    log_event("llm.call.start", request_id=request_id, llm_model=model_name, stream=stream)
+    log_event(
+        "llm.call.start", request_id=request_id, llm_model=model_name, stream=stream
+    )
     try:
         completion = client.chat.completions.create(
             model=model_name, messages=messages, stream=stream
