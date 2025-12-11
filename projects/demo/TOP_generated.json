@@ -113,129 +113,129 @@
 	},
 	{
 		"id": 51,
-		"instruction": "Your professor is teaching a class on transportation. Write a post responding to the professor's question. In your response, you should do the following:\n\n    Express and support your opinion.\n\n   Make a contribution to the discussion in your own words.\nAn effective response will contain at least 100 words.",
-		"teacher": "Doctor Diaz",
-		"teacher_content": "",
+		"instruction": "Your professor is teaching a class on education. Write a post responding to the professor's question. In your response, you should do the following:\n\n    Express and support your opinion.\n\n   Make a contribution to the discussion in your own words.\nAn effective response will contain at least 100 words.",
+		"teacher": "Doctor Achebe",
+		"teacher_content": "Teachers have to study for a long time to earn teaching degrees before they are ready to work in the classroom. Some people feel that in addition to earning a university degree, teachers should be required to take courses every few years to update their knowledge. Do you agree that there should be a mandate for teachers to take courses every few years, so they know the latest developments in their fields? Why or why not?",
 		"students": [
 			{
-				"name": "Kelly",
-				"content": ""
+				"name": "Andrew",
+				"content": "I support this policy of making teachers continue to take courses throughout their careers. This is especially important for science teachers because new scientific discoveries are made all the time. Teachers need to be aware of any new developments in their content areas so they can update their lesson plans as needed to make sure students are getting current information."
 			},
 			{
-				"name": "Paul",
-				"content": ""
+				"name": "Claire",
+				"content": "I think this mandate sounds good in theory, but it might be hard to implement. Teachers already have very busy schedules, as they spend a lot of time preparing lessons, teaching, and grading. Teachers also often participate in different professional development opportunities, so taking mandatory courses on top of all this work might be burdensome for many teachers."
 			}
 		]
 	},
 	{
 		"id": 52,
-		"instruction": "Your professor is teaching a class on transportation. Write a post responding to the professor's question. In your response, you should do the following:\n\n    Express and support your opinion.\n\n   Make a contribution to the discussion in your own words.\nAn effective response will contain at least 100 words.",
-		"teacher": "Doctor Diaz",
-		"teacher_content": "",
+		"instruction": "Your professor is teaching a class on resource management. Write a post responding to the professor's question. In your response, you should do the following:\n\n    Express and support your opinion.\n\n   Make a contribution to the discussion in your own words.\nAn effective response will contain at least 100 words.",
+		"teacher": "Doctor Achebe",
+		"teacher_content": "This week, we'll be discussing how technological advances are transforming the job market, making some jobs unnecessary. Let's focus on government actions. Suppose the government had to choose between two ways in which to support people whose jobs are no longer needed.The government could either give them enough money to live on until they find new jobs or offer them free job training without giving them money directly. Which of these two solutions do you think is better? Why?",
 		"students": [
 			{
-				"name": "Kelly",
-				"content": ""
+				"name": "Andrew",
+				"content": "I believe that the government should prioritize providing free job training opportunities. Modern training programs are usually costly, which means that many people will not be able to afford them without the government's funding. By participating in training programs, people will develop new, in-demand skills and become more competitive in the job market."
 			},
 			{
-				"name": "Paul",
-				"content": ""
+				"name": "Claire",
+				"content": "Although I agree that having access to free training programs sounds promising, I think the government's first step should be to give people enough money to live on until they find new jobs. This money will go directly into people's pockets and allow them to make their own choices concerning their future."
 			}
 		]
 	},
 	{
 		"id": 53,
-		"instruction": "Your professor is teaching a class on transportation. Write a post responding to the professor's question. In your response, you should do the following:\n\n    Express and support your opinion.\n\n   Make a contribution to the discussion in your own words.\nAn effective response will contain at least 100 words.",
-		"teacher": "Doctor Diaz",
-		"teacher_content": "",
+		"instruction": "Your professor is teaching a class on company management. Write a post responding to the professor's question. In your response, you should do the following:\n\n    Express and support your opinion.\n\n   Make a contribution to the discussion in your own words.\nAn effective response will contain at least 100 words.",
+		"teacher": "Doctor Achebe",
+		"teacher_content": "In our discussion on the importance of workplace mentoring, we learned that mentoring (training or guiding someone) is typically associated with senior employees-that is, workers who have been at a company for a long time and mentor younger colleagues. However, at some companies, especially those that use innovative technology, younger employees sometimes train or guide senior colleagues. Do you think that it is a good idea for companies to encourage younger employees to mentor senior coworkers? Why or why not?",
 		"students": [
 			{
-				"name": "Kelly",
-				"content": ""
+				"name": "Claire",
+				"content": "I support the idea of having younger employees mentor senior ones. Technology is developing so rapidly these days, and young people are much more skilled in dealing with technology than older employees are. It's the ideal way for senior employees to learn new digital skills."
 			},
 			{
-				"name": "Paul",
-				"content": ""
+				"name": "Kelly",
+				"content": "Claire makes a good point, but technology aside, I do not think that younger employees make good mentors right away. When younger employees join companies, they often lack the experience needed to be fully effective in their roles. They should be mentored by senior coworkers who have achieved a high level of expertise in their work."
 			}
 		]
 	},
 	{
 		"id": 54,
-		"instruction": "Your professor is teaching a class on transportation. Write a post responding to the professor's question. In your response, you should do the following:\n\n    Express and support your opinion.\n\n   Make a contribution to the discussion in your own words.\nAn effective response will contain at least 100 words.",
+		"instruction": "Your professor is teaching a class on child development. Write a post responding to the professor's question. In your response, you should do the following:\n\n    Express and support your opinion.\n\n   Make a contribution to the discussion in your own words.\nAn effective response will contain at least 100 words.",
 		"teacher": "Doctor Diaz",
-		"teacher_content": "",
+		"teacher_content": "We've been discussing ways that parents can help prepare their teenage children for adulthood. One line of thinking is that parents should encourage their teenagers to take part-time jobs to help them learn to be responsible, even if it is not an economic necessity for the teenagers to work. What are your thoughts on the issue? Should parents urge teenage children to get a job? Why or why not?",
 		"students": [
 			{
-				"name": "Kelly",
-				"content": ""
+				"name": "Claire",
+				"content": "Teenagers should work part-time. When I was 16, I washed dishes at a restaurant, and I'm glad I did. I learned a lot about time management. I had to use my free time wisely to make sure I could complete homework despite spending time working at a job. This is a valuable life skill."
 			},
 			{
-				"name": "Paul",
-				"content": ""
+				"name": "Andrew",
+				"content": "I would have to disagree. A teenager is still just a kid, and in my opinion, a kid needs to focus on going to school and learning. A job would be an unnecessary distraction. If it's all about learning responsibility, I think there are a lot of other ways to do that without the commitment required by a job."
 			}
 		]
 	},
 	{
 		"id": 55,
-		"instruction": "Your professor is teaching a class on transportation. Write a post responding to the professor's question. In your response, you should do the following:\n\n    Express and support your opinion.\n\n   Make a contribution to the discussion in your own words.\nAn effective response will contain at least 100 words.",
-		"teacher": "Doctor Diaz",
-		"teacher_content": "",
+		"instruction": "Your professor is teaching a class on education. Write a post responding to the professor's question. In your response, you should do the following:\n\n    Express and support your opinion.\n\n   Make a contribution to the discussion in your own words.\nAn effective response will contain at least 100 words.",
+		"teacher": "Doctor Achebe",
+		"teacher_content": "Next, we'll be discussing the future of higher education, focusing on proposals for making postsecondary education (education after high school) more efficient and more accessible. One such proposal is to make class attendance optional. For instance, under an optional-attendance policy, university students could choose not to attend classes but instead study the course materials and acquire the knowledge on their own time. Their grade would then be based entirely on exams or papers. What are your thoughts on this approach?",
 		"students": [
 			{
-				"name": "Kelly",
-				"content": ""
+				"name": "Claire",
+				"content": "I like the idea of optional attendance. University students have a lot going on, and sometimes it's difficult to make it to class. As long as students are held accountable for the information they're supposed to learn, I don't see why they should have to attend every class session, especially for classes that meet multiple times a week."
 			},
 			{
-				"name": "Paul",
-				"content": ""
+				"name": "Andrew",
+				"content": "I have to disagree with Claire. I think that class attendance policies foster another important kind of accountability. They teach discipline and responsibility. Many of the jobs that university or trade school students will pursue after graduation have their own attendance policies, so students should see class attendance as good preparation for entering the workforce."
 			}
 		]
 	},
 	{
 		"id": 56,
-		"instruction": "Your professor is teaching a class on transportation. Write a post responding to the professor's question. In your response, you should do the following:\n\n    Express and support your opinion.\n\n   Make a contribution to the discussion in your own words.\nAn effective response will contain at least 100 words.",
+		"instruction": "Your professor is teaching a class on education. Write a post responding to the professor's question. In your response, you should do the following:\n\n    Express and support your opinion.\n\n   Make a contribution to the discussion in your own words.\nAn effective response will contain at least 100 words.",
 		"teacher": "Doctor Diaz",
-		"teacher_content": "",
+		"teacher_content": "This week, we'll look at practices and activities used by primary and secondary school teachers. Let's begin by discussing journal writing activities. Some teachers ask students to keep a journal and to regularly write down their thoughts about a recent lesson or respond to a question presented by the teacher. There are also many teachers who never assign journal writing. Now, I'd like your opinion: Is journal writing a worthwhile activity to support learning? Why or why not?",
 		"students": [
 			{
-				"name": "Kelly",
-				"content": ""
+				"name": "Claire",
+				"content": "I think getting students into the habit of writing reflectively can be very beneficial. Journal writing gives students an opportunity to develop their own ideas about what there learning whether it's for a math class or a literature class. It could also give the teacher an informal way to gauge how well students are comprehending the lessons."
 			},
 			{
 				"name": "Paul",
-				"content": ""
+				"content": "I'm not convinced journal writing is worthwhile in classes.Teachers have a lot of material to cover, and students have much to learn. Unless a student is particularly interested in journal keeping, the student might view journaling as just more busy work. For there to be a benefit, students would need to take it seriously. I don't think all would."
 			}
 		]
 	},
 	{
 		"id": 57,
-		"instruction": "Your professor is teaching a class on transportation. Write a post responding to the professor's question. In your response, you should do the following:\n\n    Express and support your opinion.\n\n   Make a contribution to the discussion in your own words.\nAn effective response will contain at least 100 words.",
+		"instruction": "Your professor is teaching a class on human resources management. Write a post responding to the professor's question. In your response, you should do the following:\n\n    Express and support your opinion.\n\n   Make a contribution to the discussion in your own words.\nAn effective response will contain at least 100 words.",
 		"teacher": "Doctor Diaz",
-		"teacher_content": "",
+		"teacher_content": "Our next class will focus on how companies maintain their staffing levels. While it is important for a company to look for new employees to fill open positions, many believe it is equally important for a company to retain the workers it already has on staff. In your opinion, what is the best way for a company to encourage its employees to stay at the company instead of seeking a different job elsewhere?",
 		"students": [
 			{
-				"name": "Kelly",
-				"content": ""
+				"name": "Paul",
+				"content": "I think the best thing a company could do to keep its employees is to create a work environment that employees look forward to going to five days a week. Cramped office spaces or disorderly factory floors are not places I would want to spend a third of my life."
 			},
 			{
-				"name": "Paul",
-				"content": ""
+				"name": "Claire",
+				"content": "I see Paul's point. But even more important than a nice workspace is making sure the employees don't feel stuck in their jobs. Companies should offer opportunities for employees to advance their skills so they can get new positions within the company if they want. Employees should feel like they have a goal to work toward."
 			}
 		]
 	},
 	{
 		"id": 58,
-		"instruction": "Your professor is teaching a class on transportation. Write a post responding to the professor's question. In your response, you should do the following:\n\n    Express and support your opinion.\n\n   Make a contribution to the discussion in your own words.\nAn effective response will contain at least 100 words.",
-		"teacher": "Doctor Diaz",
-		"teacher_content": "",
+		"instruction": "Your professor is teaching a class on readiness. Write a post responding to the professor's question. In your response, you should do the following:\n\n    Express and support your opinion.\n\n   Make a contribution to the discussion in your own words.\nAn effective response will contain at least 100 words.",
+		"teacher": "Doctor Gupta",
+		"teacher_content": "When students are preparing to graduate from university, they need to make decisions about what kind of company they want to work for. They might consider large, older companies with an established reputation, or possibly new start-up companies, which tend to be small but very focused on the future. Consider the advantages of each. Would it generally be better for a new university graduate to begin working for a large, established company, or for a small start-up company? Why?",
 		"students": [
 			{
 				"name": "Kelly",
-				"content": ""
+				"content": "I think in general, the established company is the better choice. Because they're already well-known, these companies have a certain amount of respect in the business community, so it would look good to have that job experience on your résumé. That advantage alone would be a great start for a recent graduate."
 			},
 			{
-				"name": "Paul",
-				"content": ""
+				"name": "Andrew",
+				"content": "I see your point, Kelly, but taking a position at a start-up company would offer so much excitement. They often have an energy that older companies can't match-everyone can be focused on new, innovative business practices and they would be more aggressive about getting new clients. That would be a much better experience for someone fresh out of university!"
 			}
 		]
 	},
@@ -257,209 +257,209 @@
 	},
 	{
 		"id": 60,
-		"instruction": "Your professor is teaching a class on transportation. Write a post responding to the professor's question. In your response, you should do the following:\n\n    Express and support your opinion.\n\n   Make a contribution to the discussion in your own words.\nAn effective response will contain at least 100 words.",
+		"instruction": "Your professor is teaching a class on educational administration. Write a post responding to the professor's question. In your response, you should do the following:\n\n    Express and support your opinion.\n\n   Make a contribution to the discussion in your own words.\nAn effective response will contain at least 100 words.",
 		"teacher": "Doctor Diaz",
-		"teacher_content": "",
+		"teacher_content": "Teachers often ask school administrators for permission to take their students on field trips (for example, to museums or historical buildings). Some school administrators provide funding and encouragement for teachers to organize educational trips for the entire class. Many believe that going on field trips is an important part of a child's education; others think that a child's time is better spent learning in a classroom at school. Which view do you agree with? Why?",
 		"students": [
 			{
 				"name": "Kelly",
-				"content": ""
+				"content": "Field trips are so demanding of a teacher's time; I can understand why some people aren't in favor of them. Teachers can't just decide that it might be fun to take their class to an art museum. They must plan carefully to help children get the most out of that trip while not losing too much instructional time."
 			},
 			{
 				"name": "Paul",
-				"content": ""
+				"content": "Field trips can affect kids' futures in important ways. One time I went on a field trip to a space museum when I was young. I even got to try on a space suit. That experience made me want to be an astronomer. I might not have developed my interest in astronomy without that field trip experience."
 			}
 		]
 	},
 	{
 		"id": 61,
-		"instruction": "Your professor is teaching a class on transportation. Write a post responding to the professor's question. In your response, you should do the following:\n\n    Express and support your opinion.\n\n   Make a contribution to the discussion in your own words.\nAn effective response will contain at least 100 words.",
-		"teacher": "Doctor Diaz",
-		"teacher_content": "",
+		"instruction": "Your professor is teaching a class on teaching evaluation. Write a post responding to the professor's question. In your response, you should do the following:\n\n    Express and support your opinion.\n\n   Make a contribution to the discussion in your own words.\nAn effective response will contain at least 100 words.",
+		"teacher": "Doctor Gupta",
+		"teacher_content": "Let's discuss how teachers' job performance is assessed or evaluated. Regular evaluations of teachers help to ensure that students receive high-quality instruction, that good teachers are rewarded, and that struggling teachers receive help to improve. But what is the best way to evaluate teachers? Should teachers be evaluated based on their students' test scores? Should more-experienced teachers evaluate less-experienced teachers? Should students' feedback be considered? Which approach is best, and why?",
 		"students": [
 			{
-				"name": "Kelly",
-				"content": ""
+				"name": "Andrew",
+				"content": "I think experienced senior teachers are the best source of information for teacher evaluations. School leaders can assign experienced teachers to observe their fellow teachers periodically during class, and these senior teachers can then provide feedback on their colleagues' performance. An experienced teacher has the knowledge to determine what other teachers are doing well and what needs improvement."
 			},
 			{
-				"name": "Paul",
-				"content": ""
+				"name": "Kelly",
+				"content": "I'm not convinced that any one person's occasional visits to a classroom would provide accurate information. I'd like a more objective, fairer source of data, so I'd prefer to rely on test scores to inform teacher evaluations. If all students take the same test, and some classes perform better than others, then we know which teachers have been most successful."
 			}
 		]
 	},
 	{
 		"id": 62,
-		"instruction": "Your professor is teaching a class on transportation. Write a post responding to the professor's question. In your response, you should do the following:\n\n    Express and support your opinion.\n\n   Make a contribution to the discussion in your own words.\nAn effective response will contain at least 100 words.",
-		"teacher": "Doctor Diaz",
-		"teacher_content": "",
+		"instruction": "Your professor is teaching a class on public policy. Write a post responding to the professor's question. In your response, you should do the following:\n\n    Express and support your opinion.\n\n   Make a contribution to the discussion in your own words.\nAn effective response will contain at least 100 words.",
+		"teacher": "Doctor Gupta",
+		"teacher_content": "This week, we will be discussing a shortage of affordable housing that exists in many countries. In these places, housing--both apartments (flats) and houses--are expensive, because populations are growing faster than new housing is being built. Now, think about places in your country that have a housing shortage. In your post, I would like you to indicate the most effective way for the government to address a housing shortage in your country. Please explain why you think so.",
 		"students": [
 			{
-				"name": "Kelly",
-				"content": ""
+				"name": "Claire",
+				"content": "In my country, there is a lack of affordable housing in the big cities. Low-cost housing exists in areas outside of the cities, but that means workers have long commutes to reach their jobs in the cities. I recommend that my government create initiatives to encourage the construction of large buildings with many affordable apartments in cities."
 			},
 			{
 				"name": "Paul",
-				"content": ""
+				"content": "Claire's recommendation is fine, but many people prefer to live in a house rather than an apartment, even if they have longer commutes. Living in a house can be quieter and more private.So, I believe my government should give subsidies or tax relief to construction companies to build small, affordable single-family houses on unused land that surrounds many cities."
 			}
 		]
 	},
 	{
 		"id": 63,
-		"instruction": "Your professor is teaching a class on transportation. Write a post responding to the professor's question. In your response, you should do the following:\n\n    Express and support your opinion.\n\n   Make a contribution to the discussion in your own words.\nAn effective response will contain at least 100 words.",
+		"instruction": "Your professor is teaching a class on economics. Write a post responding to the professor's question. In your response, you should do the following:\n\n    Express and support your opinion.\n\n   Make a contribution to the discussion in your own words.\nAn effective response will contain at least 100 words.",
 		"teacher": "Doctor Diaz",
-		"teacher_content": "",
+		"teacher_content": "Our current unit looks at tourism and the benefit it has on a country's economy. Many argue that while tourism can indeed be a money-making endeavor, it can do more harm than good, especially tourism to small, remote places that are not heavily populated. What is your opinion? Should local or national governments promote tourism to remote regions not typically visited by tourists before? Why?",
 		"students": [
 			{
-				"name": "Kelly",
-				"content": ""
+				"name": "Andrew",
+				"content": "Tourism has always been a lucrative business. Improving the economies of these rural regions, especially if those regions are poor, can only have a positive effect. People can have a better quality of life by showcasing their food and traditions to the outside world. It's a chance the people might not get without promotion from the government."
 			},
 			{
-				"name": "Paul",
-				"content": ""
+				"name": "Claire",
+				"content": "I don't think governments should promote tourism to remote regions. The people are likely not asking for this kind of industry or for this kind of attention. Instead, governments should develop other means of improving a region's economic situation, like expanding agriculture or other industries. These efforts will have a stronger, more permanent impact on the region than bringing in groups of tourists."
 			}
 		]
 	},
 	{
 		"id": 64,
-		"instruction": "Your professor is teaching a class on transportation. Write a post responding to the professor's question. In your response, you should do the following:\n\n    Express and support your opinion.\n\n   Make a contribution to the discussion in your own words.\nAn effective response will contain at least 100 words.",
+		"instruction": "Your professor is teaching a class on environmental science. Write a post responding to the professor's question. In your response, you should do the following:\n\n    Express and support your opinion.\n\n   Make a contribution to the discussion in your own words.\nAn effective response will contain at least 100 words.",
 		"teacher": "Doctor Diaz",
-		"teacher_content": "",
+		"teacher_content": "This week, we've discussed how carbon dioxide released by gasoline-powered (petrol-powered) cars pollutes the air and contributes to climate change. Let's focus now on two proposals that governments can consider as they try to reduce carbon dioxide emissions from cars. One proposal is to improve and expand public transportation. The other is to provide financial support to companies that make electric cars and to consumers who buy them. Which proposal do you think is better? Why?",
 		"students": [
 			{
-				"name": "Kelly",
-				"content": ""
+				"name": "Claire",
+				"content": "I think improving public transportation would be more beneficial overall than giving tax breaks or rebates to particular companies and consumers. If taking a train or a bus is significantly easier, cheaper, and faster than driving a car, more people will want to use public transportation. With fewer cars on the road, there will be less air pollution."
 			},
 			{
 				"name": "Paul",
-				"content": ""
+				"content": "I believe that providing financial support to electric-car manufacturers and consumers is the better innovative long-term strategy. Many people live in rural areas, and they need their own vehicles to get around. These people would not benefit from, say, more train lines being built in a far-off city."
 			}
 		]
 	},
 	{
 		"id": 65,
-		"instruction": "Your professor is teaching a class on transportation. Write a post responding to the professor's question. In your response, you should do the following:\n\n    Express and support your opinion.\n\n   Make a contribution to the discussion in your own words.\nAn effective response will contain at least 100 words.",
-		"teacher": "Doctor Diaz",
-		"teacher_content": "",
+		"instruction": "Your professor is teaching a class on economics. Write a post responding to the professor's question. In your response, you should do the following:\n\n    Express and support your opinion.\n\n   Make a contribution to the discussion in your own words.\nAn effective response will contain at least 100 words.",
+		"teacher": "Doctor Achebe",
+		"teacher_content": "In 1930, a famous economist predicted that at the end of the twentieth century, an average worker would work only 15 hours a week, thanks to advances in technology. This did not happen, as we all know. Nonetheless, the balance between work time and free time remains an interesting question. So, let me ask you today: Twenty years in the future, will people have more leisure time (free time) and less work than they have today? Why, or why not?",
 		"students": [
 			{
-				"name": "Kelly",
-				"content": ""
+				"name": "Claire",
+				"content": "I think it is likely that people will work shorter hours in twenty years than they do today. Our societies are becoming wealthier all the time. It does not seem necessary for people to continue working as hard as they do today. At some point, having more free time should be more important than creating more wealth."
 			},
 			{
 				"name": "Paul",
-				"content": ""
+				"content": "l am not sure people will work less in the future. As Doctor Achebe wrote, a shortening of the workweek was predicted before. There are many factors that determine how long people work. Our economic system is very competitive. Workers are pushed to work longer and longer hours so that companies have a competitive advantage."
 			}
 		]
 	},
 	{
 		"id": 66,
-		"instruction": "Your professor is teaching a class on transportation. Write a post responding to the professor's question. In your response, you should do the following:\n\n    Express and support your opinion.\n\n   Make a contribution to the discussion in your own words.\nAn effective response will contain at least 100 words.",
-		"teacher": "Doctor Diaz",
-		"teacher_content": "",
+		"instruction": "Your professor is teaching a class on education. Write a post responding to the professor's question. In your response, you should do the following:\n\n    Express and support your opinion.\n\n   Make a contribution to the discussion in your own words.\nAn effective response will contain at least 100 words.",
+		"teacher": "Doctor Achebe",
+		"teacher_content": "Companies now make computer games designed to help very young children learn. The games are advertised for use by children aged 2 to 8 years and often involve basic math and reading skills, presented in a fun, game-like style. Some people say that this results in children spending too much time looking at computer screens. Do you think it's a good idea for very young children to play educational computer games? Why or why not?",
 		"students": [
 			{
-				"name": "Kelly",
-				"content": ""
+				"name": "Andrew",
+				"content": "I think it's completely inappropriate for children as young as 2 years old to play what are essentially video games. Even if the games are educational, the same skills can be taught in traditional ways- by reading books to children, for example. And it would be beneficial to interact with their parents in this way."
 			},
 			{
-				"name": "Paul",
-				"content": ""
+				"name": "Kelly",
+				"content": "Considering how important computers are to human societies these days, I think it actually makes sense to allow very young children to explore them. And if the computer games that children play also give them early access to subject matter that will later be taught in school, all the better."
 			}
 		]
 	},
 	{
 		"id": 67,
-		"instruction": "Your professor is teaching a class on transportation. Write a post responding to the professor's question. In your response, you should do the following:\n\n    Express and support your opinion.\n\n   Make a contribution to the discussion in your own words.\nAn effective response will contain at least 100 words.",
+		"instruction": "Your professor is teaching a class on business administration. Write a post responding to the professor's question. In your response, you should do the following:\n\n    Express and support your opinion.\n\n   Make a contribution to the discussion in your own words.\nAn effective response will contain at least 100 words.",
 		"teacher": "Doctor Diaz",
-		"teacher_content": "",
+		"teacher_content": "We've been discussing the importance of hiring and retaining highly skilled employees, but even the best employees may need to periodically update or further develop their work skills. One question facing managers is how much time and money to invest in improving the work skills of their employees. Some managers argue that ongoing employee training is the most important investment a company can make. What are your thoughts on the matter?",
 		"students": [
 			{
-				"name": "Kelly",
-				"content": ""
+				"name": "Andrew",
+				"content": "I don't think that employee training is the most important investment a company can make. The company should be hiring the most skilled workers it can find in the first place. There are so many other unavoidable things that a company needs to spend money on that have to take precedence over training."
 			},
 			{
-				"name": "Paul",
-				"content": ""
+				"name": "Kelly",
+				"content": "Employees' leaving their jobs is always a risk, but providing ongoing training and skill development is more likely to make employees want to stay rather than go, in my opinion. When employers pay for training, employees are likely to feel more valued by their employer, and this can only improve the employer-employee relationship."
 			}
 		]
 	},
 	{
 		"id": 68,
-		"instruction": "Your professor is teaching a class on transportation. Write a post responding to the professor's question. In your response, you should do the following:\n\n    Express and support your opinion.\n\n   Make a contribution to the discussion in your own words.\nAn effective response will contain at least 100 words.",
-		"teacher": "Doctor Diaz",
-		"teacher_content": "",
+		"instruction": "Your professor is teaching a class on environmental science. Write a post responding to the professor's question. In your response, you should do the following:\n\n    Express and support your opinion.\n\n   Make a contribution to the discussion in your own words.\nAn effective response will contain at least 100 words.",
+		"teacher": "Doctor Achebe",
+		"teacher_content": "In our textbook, we read that parks and other green spaces with trees and plants have numerous benefits for people in cities. But city governments sometimes must choose between using a piece of available land as a green space or using it for other important purposes, such as for shopping areas or for manufacturing plants. In your opinion, which is the better use for available urban space? Why?",
 		"students": [
 			{
 				"name": "Kelly",
-				"content": ""
+				"content": "It's true that parks can benefit people in cities, especially health-wise. But it's more important to use the limited space for things that people cannot survive without, like hospitals or clinics. Medical care is often an urgent necessity. Visiting a park is not."
 			},
 			{
-				"name": "Paul",
-				"content": ""
+				"name": "Claire",
+				"content": "I'm all for creating green spaces for people to enjoy, but you don't necessarily need an open piece of land to do that. Let the available land be used for business or housing purposes. Green spaces can be created on the rooftops of existing buildings. And new buildings can be constructed creatively to include open spaces with plants and trees."
 			}
 		]
 	},
 	{
 		"id": 69,
-		"instruction": "Your professor is teaching a class on transportation. Write a post responding to the professor's question. In your response, you should do the following:\n\n    Express and support your opinion.\n\n   Make a contribution to the discussion in your own words.\nAn effective response will contain at least 100 words.",
-		"teacher": "Doctor Diaz",
-		"teacher_content": "",
+		"instruction": "Your professor is teaching a class on education. Write a post responding to the professor's question. In your response, you should do the following:\n\n    Express and support your opinion.\n\n   Make a contribution to the discussion in your own words.\nAn effective response will contain at least 100 words.",
+		"teacher": "Doctor Achebe",
+		"teacher_content": "This week, we'll look at how well students transition to university. Many recent high school graduates have taken a gap year-a yearlong break after graduation-before studying at a university. During a gap year, students may get jobs, travel, or simply relax and think about their future. Some students say their gap year was beneficial, while others regret having taken one.In your opinion, does taking a gap year create more advantages or disadvantages for students? Why?",
 		"students": [
 			{
-				"name": "Kelly",
-				"content": ""
+				"name": "Andrew",
+				"content": "The gap year would be a good opportunity for students to reflect on their education goals and confirm their plans for university. At least it would give someone time to investigate different fields and get a better sense of what it means to be in business, to work in an office, or to work with their hands,etc."
 			},
 			{
-				"name": "Paul",
-				"content": ""
+				"name": "Claire",
+				"content": "Because university can be expensive, students should not take a gap year. Tuition, the cost of books, and living expenses rise every year. The money a student might save during a gap year might not be enough to cover the rise in prices when they enter university a year later."
 			}
 		]
 	},
 	{
 		"id": 70,
-		"instruction": "Your professor is teaching a class on transportation. Write a post responding to the professor's question. In your response, you should do the following:\n\n    Express and support your opinion.\n\n   Make a contribution to the discussion in your own words.\nAn effective response will contain at least 100 words.",
+		"instruction": "Your professor is teaching a class on environmental science. Write a post responding to the professor's question. In your response, you should do the following:\n\n    Express and support your opinion.\n\n   Make a contribution to the discussion in your own words.\nAn effective response will contain at least 100 words.",
 		"teacher": "Doctor Diaz",
-		"teacher_content": "",
+		"teacher_content": "Nowadays, the world is facing a number of pressing environmental problems, and over the next few weeks, we'll be discussing various innovations that may help solve these problems. To begin our discussion, I'd like you to think of one global environmental problem -for example, it could be related to water, air, land, climate, biodiversity, energy, or something similar. Then explain what you think would be an effective solution to this problem.",
 		"students": [
 			{
 				"name": "Kelly",
-				"content": ""
+				"content": "One of the major environmental problems is the limited freshwater supply in many areas of the world, which means that we need to find effective technologies to provide people with enough drinking water. One solution is to improve the technology for removing salt from seawater, which could allow us to use seawater to replenish dwindling freshwater supplies."
 			},
 			{
 				"name": "Paul",
-				"content": ""
+				"content": "I think the biggest problem is the air pollution caused by the overuse of motorized vehicles. The obvious solution is for local governments to promote alternatives, like building bike lanes in cities or improving public transportation with electric buses. Both of these would be easy to implement as well."
 			}
 		]
 	},
 	{
 		"id": 71,
-		"instruction": "Your professor is teaching a class on transportation. Write a post responding to the professor's question. In your response, you should do the following:\n\n    Express and support your opinion.\n\n   Make a contribution to the discussion in your own words.\nAn effective response will contain at least 100 words.",
-		"teacher": "Doctor Diaz",
-		"teacher_content": "",
+		"instruction": "Your professor is teaching a class on education. Write a post responding to the professor's question. In your response, you should do the following:\n\n    Express and support your opinion.\n\n   Make a contribution to the discussion in your own words.\nAn effective response will contain at least 100 words.",
+		"teacher": "Doctor Gupta",
+		"teacher_content": "This week, I want you to discuss assessment criteria. Some schoolteachers give high grades (marks) only to those students who perform well on their homework assignments and tests. Other teachers, however, may give high grades to students who have worked very hard on their assignments but have not performed so well. Which approach do you think is better: Giving grades based only on performance, or grading students not just on performance but also on their effort?",
 		"students": [
 			{
 				"name": "Kelly",
-				"content": ""
+				"content": "I think grades should be based on performance only. It's a matter of fairness. I'd be really upset if another student got nearly the same grade that I did when I turned in work that was almost perfect and the other student's work had incorrect answers or unclear ideas. It wouldn't matter to me if they worked harder."
 			},
 			{
 				"name": "Paul",
-				"content": ""
+				"content": "Sure, evaluation should mainly be based upon the student's performance, but hard work should count for something. A student who works hard, even when the final grade isn't the highest in the class, builds character, which will benefit the student later in life when they go to university or apply for a job."
 			}
 		]
 	},
 	{
 		"id": 72,
-		"instruction": "Your professor is teaching a class on transportation. Write a post responding to the professor's question. In your response, you should do the following:\n\n    Express and support your opinion.\n\n   Make a contribution to the discussion in your own words.\nAn effective response will contain at least 100 words.",
+		"instruction": "Your professor is teaching a class on consumer behavior. Write a post responding to the professor's question. In your response, you should do the following:\n\n    Express and support your opinion.\n\n   Make a contribution to the discussion in your own words.\nAn effective response will contain at least 100 words.",
 		"teacher": "Doctor Diaz",
-		"teacher_content": "",
+		"teacher_content": "This week, we will be looking at how consumers feel about their purchases of technology. Many people find that buying devices such as mobile phones or personal computers can be very difficult. They feel like they're not prepared to make the best decision to suit their needs. In your posts, I want you to discuss the following question: What do you believe is the biggest mistake that people make when buying tech products? Explain what this mistake is.",
 		"students": [
 			{
-				"name": "Kelly",
-				"content": ""
+				"name": "Claire",
+				"content": "I think one problem is that people don't match the product's capabilities to their actual needs. My brother just got a new mobile phone, and he is very excited about how highly rated the camera is. But he hardly ever takes photos. So he paid for a feature that he doesn't really need."
 			},
 			{
 				"name": "Paul",
-				"content": ""
+				"content": "When people buy a new piece of hardware, like a laptop, they often don't consider the software they are purchasing along with the hardware. If the software is not what you are used to or doesn't work with your existing files, it can be frustrating to learn a new way of using your laptop."
 			}
 		]
 	},
@@ -467,47 +467,47 @@
 		"id": 73,
 		"instruction": "Your professor is teaching a class on transportation. Write a post responding to the professor's question. In your response, you should do the following:\n\n    Express and support your opinion.\n\n   Make a contribution to the discussion in your own words.\nAn effective response will contain at least 100 words.",
 		"teacher": "Doctor Diaz",
-		"teacher_content": "",
+		"teacher_content": "Starting this week, we will discuss how public transportation is funded. Public transportation gives people from all social groups access to their homes, workplaces, and shopping. Some argue that public transportation should be supported by tax revenue so that all people could have free access to it. What do you think? Should public transportation be free to all? Why or why not?",
 		"students": [
 			{
 				"name": "Kelly",
-				"content": ""
+				"content": "People already pay so much in taxes for things like schools, roads, and law enforcement. I don't think that adding one more tax--especially when some people don't even use public transportation--would be a good idea. People need money for other essentials for their families."
 			},
 			{
 				"name": "Paul",
-				"content": ""
+				"content": "Free public transportation would result in having fewer cars on the roads. Also, it would mean cleaner air for the cities, and there are many health conditions that could be improved with cleaner air. I think the savings in health-care costs and less pollution would make it worth it."
 			}
 		]
 	},
 	{
 		"id": 74,
-		"instruction": "Your professor is teaching a class on transportation. Write a post responding to the professor's question. In your response, you should do the following:\n\n    Express and support your opinion.\n\n   Make a contribution to the discussion in your own words.\nAn effective response will contain at least 100 words.",
-		"teacher": "Doctor Diaz",
-		"teacher_content": "",
+		"instruction": "Your professor is teaching a class on economics. Write a post responding to the professor's question. In your response, you should do the following:\n\n    Express and support your opinion.\n\n   Make a contribution to the discussion in your own words.\nAn effective response will contain at least 100 words.",
+		"teacher": "Doctor Gupta",
+		"teacher_content": "This week, we'll study an issue that is often debated by economists. There are many large industries that, while providing significant economic benefits, engage in practices that result in environmental harm. Some would argue that economic success should never come at the cost of damage to the environment. Do you agree with this view? Why or why not?",
 		"students": [
 			{
-				"name": "Kelly",
-				"content": ""
+				"name": "Paul",
+				"content": "I can't say I agree. Everyone talks about protecting natural resources, but what about protecting humans? Humans need the ability to work and provide for their families, and sometimes this means creating jobs through industries that might contribute to pollution. Those industries can just be monitored by environmental agencies. That's a win-win solution."
 			},
 			{
-				"name": "Paul",
-				"content": ""
+				"name": "Kelly",
+				"content": "I see your point, Paul, but I don't think there are many industries that are so essential for the economy that their impact on the environment can be ignored or merely 'monitored'. Continual environmental damage will one day lead to the extinction of species that are essentials to agriculture. That will endanger our food chain."
 			}
 		]
 	},
 	{
 		"id": 75,
-		"instruction": "Your professor is teaching a class on transportation. Write a post responding to the professor's question. In your response, you should do the following:\n\n    Express and support your opinion.\n\n   Make a contribution to the discussion in your own words.\nAn effective response will contain at least 100 words.",
-		"teacher": "Doctor Diaz",
-		"teacher_content": "",
+		"instruction": "Your professor is teaching a class on sociology. Write a post responding to the professor's question. In your response, you should do the following:\n\n    Express and support your opinion.\n\n   Make a contribution to the discussion in your own words.\nAn effective response will contain at least 100 words.",
+		"teacher": "Doctor Achebe",
+		"teacher_content": "Let's think about population trends in urban and rural areas (villages). Living in urban areas can be expensive; nonetheless, when they have a choice of where to live, people in some countries do not wish to live in rural areas even if the cost of living there is lower. If governments of some countries want to attract more people to live in rural areas or villages, what is the best strategy or approach that governments can use? Why?",
 		"students": [
 			{
-				"name": "Kelly",
-				"content": ""
+				"name": "Claire",
+				"content": "I would live in a rural area if the government gave more financial help to farmers. Although it may cost very little to live in a rural area, it costs a lot to begin a career in agriculture. If I had financial help, I would start my own farm and be happy to live in a rural area."
 			},
 			{
-				"name": "Paul",
-				"content": ""
+				"name": "Kelly",
+				"content": "In my country, urban centers are great places to live because you can access shops, restaurants, and museums. If the government of my country wanted to attract me to live in a rural area, the area would first have to attract more businesses focused on entertainment and culture than most rural areas have now."
 			}
 		]
 	}
