@@ -23,7 +23,7 @@ cp test_model/config.example.yaml test_model/config.local.yaml
 - `api_key`: LLM API Key
 - `dataset_glob`: 样本通配符，默认 `test_answer/*.txt`（文件名形如 `44_5_2.txt`）
 - `evaluate_polished`: 是否对润色结果再评一遍分数
-- `runs`: 每个样本重复调用次数，用于降低 LLM 随机性（取平均后四舍五入）
+- `runs`: 每个样本重复调用次数，用于降低 LLM 随机性（取平均，不再四舍五入）
 
 ## 运行
 

@@ -161,13 +161,13 @@ def main():
                 polished_score = polished_parsed.get("score")
                 polished_runs.append(polished_score)
 
-        # 计算平均预测并四舍五入作为最终分
+        # 计算平均预测（不四舍五入，保持为浮点用于误差计算）
         pred_numeric = [p for p in pred_runs if p is not None]
-        pred_final = round(statistics.mean(pred_numeric)) if pred_numeric else None
+        pred_final = statistics.mean(pred_numeric) if pred_numeric else None
 
         polished_numeric = [p for p in polished_runs if p is not None]
         polished_final = (
-            round(statistics.mean(polished_numeric)) if polished_numeric else None
+            statistics.mean(polished_numeric) if polished_numeric else None
         )
 
         if pred_final is not None:
