@@ -6,3 +6,4 @@ api_key: ""  # 填写你的 LLM API Key
 # 数据集与评测
 dataset_glob: test_answer/*.txt
 evaluate_polished: true  # 是否对润色结果再评一遍，计算不降分指标
+runs: 1  # 每个样本重复调用次数，降低LLM随机性

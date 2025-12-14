@@ -128,6 +128,8 @@ def main():
         os.environ["DASHSCOPE_MODEL"] = cfg["model_name"]
 
     samples = load_samples(cfg.get("dataset_glob", "test_answer/*.txt"))
+    runs = int(cfg.get("runs", 1))
+    runs = max(1, runs)
 
     parser = CommentParser()
     evaluator_cache: Dict[str, Evaluator] = {}
@@ -142,29 +144,48 @@ def main():
             evaluator_cache[sample["question_id"]] = Evaluator(question=sample["question_id"])
         ev = evaluator_cache[sample["question_id"]]
 
-        comment = ev.generate_response(sample["text"])
-        parsed_comment = parser.parse_complete(comment)
-        pred = parsed_comment.get("score")
-        update_confusion(confusion, sample["expected"], pred)
+        pred_runs = []
+        polished_runs = []
+
+        for _ in range(runs):
+            comment = ev.generate_response(sample["text"])
+            parsed_comment = parser.parse_complete(comment)
+            score_pred = parsed_comment.get("score")
+            pred_runs.append(score_pred)
+
+            if cfg.get("evaluate_polished", True):
+                polisher = Polisher(sample["text"], comment)
+                polished = polisher.generate_response()
+                polished_comment = ev.generate_response(polished)
+                polished_parsed = parser.parse_complete(polished_comment)
+                polished_score = polished_parsed.get("score")
+                polished_runs.append(polished_score)
+
+        # 计算平均预测并四舍五入作为最终分
+        pred_numeric = [p for p in pred_runs if p is not None]
+        pred_final = round(statistics.mean(pred_numeric)) if pred_numeric else None
+
+        polished_numeric = [p for p in polished_runs if p is not None]
+        polished_final = (
+            round(statistics.mean(polished_numeric)) if polished_numeric else None
+        )
+
+        if pred_final is not None:
+            update_confusion(confusion, sample["expected"], pred_final)
 
         record = {
             "path": sample["path"],
             "expected": sample["expected"],
-            "pred": pred,
-            "polished_pred": None,
+            "pred": pred_final,
+            "pred_runs": pred_runs,
+            "polished_pred": polished_final,
+            "polished_pred_runs": polished_runs if polished_runs else None,
             "delta": None,
         }
 
-        if cfg.get("evaluate_polished", True):
-            polisher = Polisher(sample["text"], comment)
-            polished = polisher.generate_response()
-            polished_comment = ev.generate_response(polished)
-            polished_parsed = parser.parse_complete(polished_comment)
-            polished_score = polished_parsed.get("score")
-            record["polished_pred"] = polished_score
-            if pred is not None and polished_score is not None:
-                record["delta"] = polished_score - pred
-                deltas.append(record["delta"])
+        if pred_final is not None and polished_final is not None:
+            record["delta"] = polished_final - pred_final
+            deltas.append(record["delta"])
 
         records.append(record)
 
@@ -194,6 +215,7 @@ def main():
     report = {
         "model": cfg.get("model_name", "unknown"),
         "samples": len(records),
+        "runs": runs,
         "metrics": {
             "exact_acc": exact_acc,
             "mae": mae,
