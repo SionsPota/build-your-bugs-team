@@ -379,9 +379,9 @@ class Polisher:
         return prompt
 
     def generate_response(self, stream: bool = False):
-        model_name = os.getenv("DASHSCOPE_MODEL", "mimo")
+        model_name = os.getenv("DASHSCOPE_MODEL", "mimo-v2-flash")
         base_url = os.getenv(
-            "DASHSCOPE_BASE_URL", "https://dashscope.aliyuncs.com/compatible-mode/v1"
+            "DASHSCOPE_BASE_URL", "https://api.xiaomimimo.com/v1"
         )
         client = OpenAI(
             api_key=os.getenv("DASHSCOPE_API_KEY"),
