@@ -1,0 +1,208 @@
+{
+  "model": "kimi-k2-0905-preview",
+  "samples": 8,
+  "runs": 5,
+  "metrics": {
+    "exact_acc": 0.5,
+    "mae": 0.5499999999999999,
+    "mse": 0.6999999999999998,
+    "bias": 0.5499999999999999,
+    "spearman": 0.9250722740947308,
+    "order_non_violation": false
+  },
+  "polisher": {
+    "non_drop_rate": 1.0,
+    "improve_rate": 0.625,
+    "avg_delta": 1.3250000000000002,
+    "min_delta": 0,
+    "max_delta": 4
+  },
+  "confusion": {
+    "1": {
+      "1": 2
+    },
+    "2": {
+      "3": 1
+    },
+    "3": {
+      "4.8": 1
+    },
+    "4": {
+      "5": 1,
+      "4.6": 1
+    },
+    "5": {
+      "5": 2
+    }
+  },
+  "details": [
+    {
+      "path": "test_answer/44_1_1.txt",
+      "expected": 1,
+      "pred": 1,
+      "pred_runs": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "polished_pred": 5,
+      "polished_pred_runs": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "delta": 4
+    },
+    {
+      "path": "test_answer/44_1_2.txt",
+      "expected": 1,
+      "pred": 1,
+      "pred_runs": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "polished_pred": 5,
+      "polished_pred_runs": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "delta": 4
+    },
+    {
+      "path": "test_answer/44_2_1.txt",
+      "expected": 2,
+      "pred": 3,
+      "pred_runs": [
+        3,
+        3,
+        3,
+        3,
+        3
+      ],
+      "polished_pred": 5,
+      "polished_pred_runs": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "delta": 2
+    },
+    {
+      "path": "test_answer/44_3_1.txt",
+      "expected": 3,
+      "pred": 4.8,
+      "pred_runs": [
+        4,
+        5,
+        5,
+        5,
+        5
+      ],
+      "polished_pred": 5,
+      "polished_pred_runs": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "delta": 0.20000000000000018
+    },
+    {
+      "path": "test_answer/44_4_1.txt",
+      "expected": 4,
+      "pred": 5,
+      "pred_runs": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "polished_pred": 5,
+      "polished_pred_runs": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "delta": 0
+    },
+    {
+      "path": "test_answer/44_4_2.txt",
+      "expected": 4,
+      "pred": 4.6,
+      "pred_runs": [
+        4,
+        5,
+        5,
+        5,
+        4
+      ],
+      "polished_pred": 5,
+      "polished_pred_runs": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "delta": 0.40000000000000036
+    },
+    {
+      "path": "test_answer/44_5_1.txt",
+      "expected": 5,
+      "pred": 5,
+      "pred_runs": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "polished_pred": 5,
+      "polished_pred_runs": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "delta": 0
+    },
+    {
+      "path": "test_answer/44_5_2.txt",
+      "expected": 5,
+      "pred": 5,
+      "pred_runs": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "polished_pred": 5,
+      "polished_pred_runs": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "delta": 0
+    }
+  ]
+}

@@ -43,3 +43,6 @@ frontend/*.local
 .DS_Store
 Thumbs.db
 
+# Local evaluation configs (keep example only)
+test_model/*.yaml
+!test_model/config.example.yaml

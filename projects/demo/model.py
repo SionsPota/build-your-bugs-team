@@ -339,12 +339,17 @@ class Evaluator:
         return prompt
 
     def generate_response(self, answer: str, stream: bool = False):
+        # 允许通过环境变量覆盖模型配置
+        model_name = os.getenv("DASHSCOPE_MODEL", "mimo-v2-flash")
+        base_url = os.getenv(
+            "DASHSCOPE_BASE_URL", "https://dashscope.aliyuncs.com/compatible-mode/v1"
+        )
         client = OpenAI(
             api_key=os.getenv("DASHSCOPE_API_KEY"),
-            base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
+            base_url=base_url,
         )
         completion = _call_llm(
-            client, "qwen-plus", self.generate_prompt(answer), stream
+            client, model_name, self.generate_prompt(answer), stream
         )
         if stream:
             return completion
@@ -374,11 +379,15 @@ class Polisher:
         return prompt
 
     def generate_response(self, stream: bool = False):
+        model_name = os.getenv("DASHSCOPE_MODEL", "mimo")
+        base_url = os.getenv(
+            "DASHSCOPE_BASE_URL", "https://dashscope.aliyuncs.com/compatible-mode/v1"
+        )
         client = OpenAI(
             api_key=os.getenv("DASHSCOPE_API_KEY"),
-            base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
+            base_url=base_url,
         )
-        completion = _call_llm(client, "qwen-plus", self.generate_prompt(), stream)
+        completion = _call_llm(client, model_name, self.generate_prompt(), stream)
         if stream:
             return completion
         return completion.choices[0].message.content

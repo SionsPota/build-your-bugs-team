@@ -1,0 +1,209 @@
+{
+  "model": "mimo-v2-flash",
+  "samples": 8,
+  "runs": 5,
+  "metrics": {
+    "exact_acc": 0.375,
+    "mae": 0.3499999999999999,
+    "mse": 0.3699999999999998,
+    "bias": 0.14999999999999994,
+    "spearman": 0.9147021665807529,
+    "order_non_violation": false
+  },
+  "polisher": {
+    "non_drop_rate": 1.0,
+    "improve_rate": 0.75,
+    "avg_delta": 1.625,
+    "min_delta": 0,
+    "max_delta": 4.2
+  },
+  "confusion": {
+    "1": {
+      "1.4": 1,
+      "0.8": 1
+    },
+    "2": {
+      "2": 1
+    },
+    "3": {
+      "4.6": 1
+    },
+    "4": {
+      "3.8": 1,
+      "3.6": 1
+    },
+    "5": {
+      "5": 2
+    }
+  },
+  "details": [
+    {
+      "path": "test_answer/44_1_1.txt",
+      "expected": 1,
+      "pred": 1.4,
+      "pred_runs": [
+        2,
+        1,
+        1,
+        1,
+        2
+      ],
+      "polished_pred": 4.2,
+      "polished_pred_runs": [
+        5,
+        1,
+        5,
+        5,
+        5
+      ],
+      "delta": 2.8000000000000003
+    },
+    {
+      "path": "test_answer/44_1_2.txt",
+      "expected": 1,
+      "pred": 0.8,
+      "pred_runs": [
+        2,
+        0,
+        1,
+        0,
+        1
+      ],
+      "polished_pred": 5,
+      "polished_pred_runs": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "delta": 4.2
+    },
+    {
+      "path": "test_answer/44_2_1.txt",
+      "expected": 2,
+      "pred": 2,
+      "pred_runs": [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "polished_pred": 5,
+      "polished_pred_runs": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "delta": 3
+    },
+    {
+      "path": "test_answer/44_3_1.txt",
+      "expected": 3,
+      "pred": 4.6,
+      "pred_runs": [
+        4,
+        5,
+        5,
+        5,
+        4
+      ],
+      "polished_pred": 5,
+      "polished_pred_runs": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "delta": 0.40000000000000036
+    },
+    {
+      "path": "test_answer/44_4_1.txt",
+      "expected": 4,
+      "pred": 3.8,
+      "pred_runs": [
+        5,
+        1,
+        4,
+        4,
+        5
+      ],
+      "polished_pred": 5,
+      "polished_pred_runs": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "delta": 1.2000000000000002
+    },
+    {
+      "path": "test_answer/44_4_2.txt",
+      "expected": 4,
+      "pred": 3.6,
+      "pred_runs": [
+        4,
+        2,
+        4,
+        4,
+        4
+      ],
+      "polished_pred": 5,
+      "polished_pred_runs": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "delta": 1.4
+    },
+    {
+      "path": "test_answer/44_5_1.txt",
+      "expected": 5,
+      "pred": 5,
+      "pred_runs": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "polished_pred": 5,
+      "polished_pred_runs": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "delta": 0
+    },
+    {
+      "path": "test_answer/44_5_2.txt",
+      "expected": 5,
+      "pred": 5,
+      "pred_runs": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "polished_pred": 5,
+      "polished_pred_runs": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "delta": 0
+    }
+  ]
+}
